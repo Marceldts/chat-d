@@ -26,7 +26,7 @@ export class LoginComponent implements OnInit {
 
   onLogin(){
     console.log('Por lo menos el botón funciona')
-    const { email, data } = this.loginForm.controls;
+    const { email, data } = this.loginForm.value;
     this.authService.login(email, data)
   }
 
