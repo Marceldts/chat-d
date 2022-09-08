@@ -8,10 +8,15 @@
       <ion-label position="floating">Password</ion-label>
       <ion-input required formControlName="loginForm.password" type="password"></ion-input>
     </ion-item>
-    <ion-button shape="round" block color="primary" (click)="onLogin()" >
-      Login
-    </ion-button>
-    <ion-button shape="round" block color="primary" routerLink="/register">Register</ion-button>
+    <ion-row>
+      <ion-button shape="round" block color="primary" (click)="onLogin()" >Login</ion-button>
+    </ion-row>
+    <ion-row>
+      <ion-label>No tienes cuenta? Regístrate aquí</ion-label>
+    </ion-row>
+    <ion-row>
+      <ion-button shape="round" block color="primary" routerLink="/register">Register</ion-button>
+    </ion-row>
   </form>
   <!-- <form [formGroup]="loginForm">
       <div class="col">
