@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, getAuth, onAuthStateChanged, signInWithEmailAndPassword } from "firebase/auth";
 import { FirebaseServiceService } from './firebase-service.service';
 
 @Injectable({
@@ -24,5 +24,10 @@ export class AuthService {
     return user;
     }
 
+  async register(email, password){
+    FirebaseServiceService.getFirebaseConfig()
+    const auth = getAuth();
+    const user = await createUserWithEmailAndPassword(auth, email, password)
+  }
 
 }
