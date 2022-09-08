@@ -2,14 +2,14 @@
   <form [formGroup]="loginForm">
     <ion-item>
       <ion-label position="floating">E-Mail</ion-label>
-      <ion-input required formControlName="loginForm.email" type="text"></ion-input>
+      <ion-input required formControlName="email" type="text"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Password</ion-label>
-      <ion-input required formControlName="loginForm.password" type="password"></ion-input>
+      <ion-input required formControlName="password" type="password"></ion-input>
     </ion-item>
     <ion-row>
-      <ion-button shape="round" block color="primary" (click)="onLogin()" >Login</ion-button>
+      <ion-button shape="round" block color="primary" (click)="onLogin()" [disabled]="!loginForm.valid">Login</ion-button>
     </ion-row>
     <ion-row>
       <ion-label>No tienes cuenta? Regístrate aquí</ion-label>

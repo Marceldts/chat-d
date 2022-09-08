@@ -18,14 +18,12 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
-      email: ['', Validators.required, Validators.email],
+      email: ['', [Validators.required, Validators.email]],
       password: ['', Validators.required]
     })
-    this.loginForm.valueChanges.subscribe(values => console.log(values))
   }
 
   onLogin(){
-    console.log('Por lo menos el botón funciona')
     const { email, data } = this.loginForm.value;
     this.authService.login(email, data)
   }
