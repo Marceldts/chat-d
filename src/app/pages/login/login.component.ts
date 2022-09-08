@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-login',
@@ -7,8 +9,25 @@ import { Component, OnInit } from '@angular/core';
 })
 export class LoginComponent implements OnInit {
 
-  constructor() { }
+  loginForm: FormGroup;  
 
-  ngOnInit() {}
+  constructor(
+    private readonly fb: FormBuilder,
+    private readonly authService: AuthService
+  ) { }
+
+  ngOnInit(): void {
+    this.loginForm = this.fb.group({
+      email: ['', Validators.required, Validators.email],
+      password: ['', Validators.required]
+    })
+    this.loginForm.valueChanges.subscribe(values => console.log(values))
+  }
+
+  onLogin(){
+    console.log('Por lo menos el botón funciona')
+    const { email, data } = this.loginForm.controls;
+    this.authService.login(email, data)
+  }
 
 }
