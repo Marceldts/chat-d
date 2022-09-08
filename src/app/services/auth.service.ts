@@ -10,19 +10,19 @@ export class AuthService {
   constructor() { }
 
   async login(email, password){
-    FirebaseServiceService.getFirebaseConfig();
+    FirebaseServiceService.getFirebaseConfig()
     const auth = getAuth();
-    signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-    // Signed in 
-    const user = userCredential.user;
-    // ...
-  })
-  .catch((error) => {
-    const errorCode = error.code;
-    const errorMessage = error.message;
-  });
-}
+    const user = await signInWithEmailAndPassword(auth, email, password).then((userCredential) => {
+      const { user } = userCredential;
+      sessionStorage.setItem('user', JSON.stringify({
+      uid: user.uid,
+      token: user['accessToken'],
+      email: user.email
+      }));
+    });
+      
+    return user;
+    }
 
 
 }
