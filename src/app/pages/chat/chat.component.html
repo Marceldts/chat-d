@@ -1,3 +1,44 @@
-<p>
-  chat works!
-</p>
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Chat</ion-title>
+    <ion-button (click)="onLogoff()" expand="block" fill="clear" shape="round">Cerrar sesión</ion-button>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  
+  <ion-infinite-scroll threshold="25%" [disabled]="true" position="bottom" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+  <ion-footer>
+    <ion-toolbar>
+      <ion-row>
+        <ion-input type="text" placeholder="Escribe aquí" name="message" minlength="1"></ion-input>
+        <ion-button (click)="onSendMessage()">
+          <ion-icon slot="icon-only" name="add"></ion-icon>
+        </ion-button>
+      </ion-row>
+    </ion-toolbar>
+  </ion-footer>
+</ion-content>
+<ion-content padding>
+
+  <div id="chatMessages">
+    <div *ngFor="let message of messages" [class]="message.specialMessage ? 'message special' : 'message'">
+      <div [class]="message.username == username ? 'innerMessage messageRight' : 'innerMessage messageLeft'">
+        <div class="username">{{ message.username }}</div>
+        <div class="messageContent">{{ message.message }}</div>
+      </div>
+    </div>
+  </div>
+
+</ion-content>
+
+<ion-footer>
+  <ion-toolbar>
+    <div id="footer">
+      <div class="elem"><ion-input type="text" [(ngModel)]="message"></ion-input></div>
+      <div class="elem"><button ion-button icon-only (click)="sendMessage()"><ion-icon name="send"></ion-icon> </button></div>
+    </div>
+  </ion-toolbar>
+</ion-footer>

@@ -9,6 +9,7 @@ export class AuthService {
 
   constructor() { }
 
+
   async login(email, password){
     FirebaseServiceService.getFirebaseConfig()
     const auth = getAuth();
@@ -28,6 +29,12 @@ export class AuthService {
     FirebaseServiceService.getFirebaseConfig()
     const auth = getAuth();
     const user = await createUserWithEmailAndPassword(auth, email, password)
+  }
+
+  async logoff(){
+    FirebaseServiceService.getFirebaseConfig()
+    const auth = getAuth();
+    auth.signOut().then(() => sessionStorage.removeItem('user'));
   }
 
 }
