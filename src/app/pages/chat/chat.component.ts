@@ -22,6 +22,7 @@ length: number
 end: boolean = false
 numScrollTop: number;
 numCurrentY: number;
+displayName = 'Paquito'
 
   constructor(
     private readonly authService: AuthService,
@@ -58,11 +59,11 @@ numCurrentY: number;
     geo = null;
     this.messageService.addMessage({
       user,
-      text,
       date,
+      text,
       geo
     })
-    this.inputMessage.reset()
+    this.inputMessage.value = ''
     this.scrollToEnd();
     console.log(this.inputMessage.value + sessionStorage.getItem('user'))
     // console.log(this.inputMessage.value + sessionStorage["user[email]"])
@@ -139,7 +140,7 @@ numCurrentY: number;
     otherMessages.className = 'otherMessages';
     data.className = 'data';
 
-    if(this.messages[i].user === this.authService.userData.displayName){
+    if(this.messages[i].user === this.authService.userData.email){
       const myel = this.renderer.createElement('div');
       myel.className = 'myMessage'
       myel.innerHTML = '';

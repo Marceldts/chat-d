@@ -17,6 +17,17 @@ export class MessageService {
 
    addMessage(msg: Message){
     this.messageDB.push(msg)
+    // this.messageDB.push({
+
+    //   user: 'ManolitoPiesDePlata',
+
+    //   date: new Date().toLocaleDateString(),
+
+    //   text: 'Mensaje de prueba',
+
+    //   geo: null
+
+    // });
    }
 
    getMessage(): Observable<Message[]>{

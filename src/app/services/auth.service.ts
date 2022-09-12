@@ -28,11 +28,17 @@ export class AuthService {
     return user;
     }
 
-  async register(email, password){
+  async register(email, password, displayName){
     FirebaseServiceService.getFirebaseConfig()
     const auth = getAuth();
-    const user = await createUserWithEmailAndPassword(auth, email, password)
+    const user = await createUserWithEmailAndPassword(auth, email, password).then((result) => this.setUserData(result.user))
+    
+    // .then(function(result) {
+    //   return result.user.updateProfile()
+    //   ({
+    //     displayName: document.getElementById("name").value})}
   }
+
 
   async logoff(){
     FirebaseServiceService.getFirebaseConfig()
@@ -45,9 +51,7 @@ export class AuthService {
     const userData: User = {
       uid: user.uid,
       email: user.email,
-      displayName: user.displayName,
-      photoURL: user.photoURL,
-      emailVerified: user.emailVerified
+      displayName: user.displayName
     }
     return userRef.set(userData, {
       merge: true
@@ -59,7 +63,5 @@ export class AuthService {
 export interface User {
   uid: string;
   email: string;
-  displayName: string;
-  photoURL: string;
-  emailVerified: boolean;
+  displayName: string
 }
