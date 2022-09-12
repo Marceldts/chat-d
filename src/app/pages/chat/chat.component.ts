@@ -132,7 +132,8 @@ displayName = 'Paquito'
   }
 
   showMessage(i){
-    const mensajesContenido = this.messagesContent.nativeElement;
+    this.inputMessage = this.el.nativeElement.getElementsByTagName('input')[0];
+    const mensajesContenido = this.inputMessage.value;
     const myMessages = this.renderer.createElement('div');
     const otherMessages = this.renderer.createElement('div');
     const data = this.renderer.createElement('div');
