@@ -1,44 +1,32 @@
-<ion-header>
+<<ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-title>Chat</ion-title>
-    <ion-button (click)="onLogoff()" expand="block" fill="clear" shape="round">Cerrar sesión</ion-button>
+    <ion-row>
+      <ion-title class="ion-text-center">Chat</ion-title>
+      <ion-button class="logout" (click)="onLogoff()">
+        <ion-icon name="log-out-outline"></ion-icon>
+      </ion-button>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
-<ion-content>
+
+<ion-content class="ion-content" [scrollEvents]="true" onload="scrollToBottom()">
   
-  <ion-infinite-scroll threshold="25%" [disabled]="true" position="bottom" (ionInfinite)="loadData($event)">
-    <ion-infinite-scroll-content loadingSpinner="bubbles" loadingText="Loading more data...">
+  <div #messagesContent class="messages"></div>
+  <div class="scroll" (click)="scrollToBottom()" *ngIf="!compScroll()"></div>
+  <ion-infinite-scroll (ionInfinite)="loadData()">
+    <ion-infinite-scroll-content class="loadingSpinner"
+      loadingSpinner="circular">
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
+</ion-content>
+  
   <ion-footer>
     <ion-toolbar>
       <ion-row>
-        <ion-input type="text" placeholder="Escribe aquí" name="message" minlength="1"></ion-input>
+        <ion-input type="text" placeholder="Escribe aquí" minlength="1" id="inputMessage"></ion-input>
         <ion-button (click)="onSendMessage()">
           <ion-icon slot="icon-only" name="add"></ion-icon>
         </ion-button>
       </ion-row>
     </ion-toolbar>
   </ion-footer>
-</ion-content>
-<ion-content padding>
-
-  <div id="chatMessages">
-    <div *ngFor="let message of messages" [class]="message.specialMessage ? 'message special' : 'message'">
-      <div [class]="message.username == username ? 'innerMessage messageRight' : 'innerMessage messageLeft'">
-        <div class="username">{{ message.username }}</div>
-        <div class="messageContent">{{ message.message }}</div>
-      </div>
-    </div>
-  </div>
-
-</ion-content>
-
-<ion-footer>
-  <ion-toolbar>
-    <div id="footer">
-      <div class="elem"><ion-input type="text" [(ngModel)]="message"></ion-input></div>
-      <div class="elem"><button ion-button icon-only (click)="sendMessage()"><ion-icon name="send"></ion-icon> </button></div>
-    </div>
-  </ion-toolbar>
-</ion-footer>

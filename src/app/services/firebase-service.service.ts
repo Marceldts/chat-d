@@ -10,7 +10,7 @@ export class FirebaseServiceService {
   constructor() { }
 
   
-private static firebaseConfig = {
+public static firebaseConfig = {
   apiKey: "AIzaSyCuRL-cKeW_DywkAs3pE9rLg9BgrejA3b8",
   authDomain: "chat-b324a.firebaseapp.com",
   projectId: "chat-b324a",

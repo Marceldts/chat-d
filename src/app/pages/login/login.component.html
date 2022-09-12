@@ -1,3 +1,8 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Inicio de sesión</ion-title>
+  </ion-toolbar>
+</ion-header>
 <ion-content>
   <form [formGroup]="loginForm">
     <ion-item>
@@ -9,13 +14,13 @@
       <ion-input required formControlName="password" type="password"></ion-input>
     </ion-item>
     <ion-row>
-      <ion-button shape="round" block color="primary" (click)="onLogin()" [disabled]="!loginForm.valid">Login</ion-button>
+      <ion-button shape="round" block color="primary" (click)="onLogin()" [disabled]="!loginForm.valid">Iniciar sesión</ion-button>
     </ion-row>
     <ion-row>
       <ion-label>No tienes cuenta? Regístrate aquí</ion-label>
     </ion-row>
     <ion-row>
-      <ion-button shape="round" block color="primary" routerLink="/register">Register</ion-button>
+      <ion-button shape="round" block color="primary" routerLink="/register">Registrarme</ion-button>
     </ion-row>
   </form>
   <!-- <form [formGroup]="loginForm">
