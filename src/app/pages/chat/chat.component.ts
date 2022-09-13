@@ -33,9 +33,6 @@ displayName = 'Paquito'
     ) { 
       this.messageService.getMessage().subscribe(m => this.messages = m)
       this.length = 0;
-      this.numScrollTop = 0;
-      this.numCurrentY = 0;
-      
     }
 
   ngOnInit() {
@@ -47,7 +44,6 @@ displayName = 'Paquito'
     })
     this.messageService.getMessage().subscribe((m) =>{
       this.messages = m
-      this.appendItems(30)
     })
   }
 
@@ -64,19 +60,8 @@ displayName = 'Paquito'
       geo
     )
     this.inputMessage.value = ''
-    this.scrollToEnd();
   }
 
-  async scrollToEnd(){
-    if(length<this.messages.length){
-      while(length<this.messages.length){
-        await this.loadData();
-        setTimeout(()=>{this.content.scrollToBottom(500);},300);
-      }
-      }else{
-        setTimeout(()=>{this.content.scrollToBottom(500);},300);
-      }
-  }
 
   onLogoff(){
     this.authService.logoff().then(() => this.router.navigate(['']))
@@ -95,15 +80,6 @@ displayName = 'Paquito'
     return this.end;
   }
 
-  async loadData(){
-    if(length < this.messages.length){
-      await this.wait(500)
-      this.infiniteScroll.complete();
-      this.appendItems(10)
-    } else{
-      this.infiniteScroll.disabled = true;
-    }
-  }
 
   wait(t) {
     return new Promise<void>((resolve) => {
@@ -111,67 +87,5 @@ displayName = 'Paquito'
         resolve();
       }, t);
     });
-  }
-
-  async appendItems(n){      
-    var size = length;
-
-    if (size+n<=this.messages.length){
-      for (var i = size; i < size+n; i++) {
-        await this.showMessage(i);
-        length++;
-      }
-    }else{
-      for (var i = size; i < this.messages.length; i++) {
-        await this.showMessage(i);
-        length++;  
-      }
-    }
-  }
-
-  showMessage(i){
-    const mensajesContenido = this.el.nativeElement.getElementsByTagName('input')[0].value;
-    const myMessages = this.renderer.createElement('div');
-    const otherMessages = this.renderer.createElement('div');
-    const data = this.renderer.createElement('div');
-    myMessages.className = 'myMessages';
-    otherMessages.className = 'otherMessages';
-    data.className = 'data';
-
-    if(this.messages[i].user === this.authService.userData?.email){
-      const myel = this.renderer.createElement('div');
-      myel.className = 'myMessage'
-      myel.innerHTML = '';
-      if (this.messages[i]?.user!==this.messages[i-1]?.user){
-        const bold = this.renderer.createElement('div');
-        bold.className = 'meBold'
-        bold.innerHTML += `Yo`;
-        this.renderer.appendChild(myel,bold);
-      }
-      myel.innerHTML += `${this.messages[i].text}`;
-      if (this.messages[i]?.geo!==undefined){
-        data.innerHTML = `${this.messages[i].geo}`;
-        this.renderer.appendChild(myel,data);
-      }
-      this.renderer.appendChild(myMessages,myel);
-      this.renderer.appendChild(mensajesContenido,myMessages);
-    }else{
-      const el = this.renderer.createElement('div');
-      el.className = 'message'
-      el.innerHTML = '';
-      if (this.messages[i]?.user!==this.messages[i-1]?.user){
-        const bold = this.renderer.createElement('div');
-        bold.className = 'bold'
-        bold.innerHTML += `${this.messages[i].user}`;
-        this.renderer.appendChild(el,bold);
-      }
-      el.innerHTML += `${this.messages[i].text}`;
-      if (this.messages[i]?.geo!==undefined){
-        data.innerHTML = `${this.messages[i].geo}`;
-        this.renderer.appendChild(el,data);
-      }
-      this.renderer.appendChild(otherMessages,el);
-      this.renderer.appendChild(mensajesContenido,otherMessages);
-    }
   }
 }

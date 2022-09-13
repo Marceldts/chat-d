@@ -22,6 +22,12 @@
   <div *ngFor="let mesage of messages" class="msg">
     <b>{{mesage.user}}:</b> {{mesage.text}}
   </div>
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData()">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Loading more data...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
 </ion-content>
   
   <ion-footer>
