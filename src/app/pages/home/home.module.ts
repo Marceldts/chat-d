@@ -4,6 +4,7 @@ import { CommonModule } from '@angular/common';
 import { HomeRoutingModule } from './home-routing.module';
 import { IonicModule } from '@ionic/angular';
 import { HomeComponent } from './home.component';
+import { HttpClientModule } from '@angular/common/http';
 
 
 @NgModule({
@@ -12,7 +13,8 @@ import { HomeComponent } from './home.component';
     CommonModule,
     HomeRoutingModule,
     IonicModule,
-    HomeComponent
+    HomeComponent,
+    HttpClientModule, 
   ]
 })
 export class HomeModule { }
