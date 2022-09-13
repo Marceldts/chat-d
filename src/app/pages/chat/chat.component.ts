@@ -53,20 +53,18 @@ displayName = 'Paquito'
 
   onSendMessage(){
     this.inputMessage = this.el.nativeElement.getElementsByTagName('input')[0];
-    const text = this.inputMessage
+    const text = this.inputMessage.value
     const date = new Date().toLocaleDateString();
-    const user = 'ManolitoPiesDePlata',
-    geo = null;
-    this.messageService.addMessage({
+    const geo = null;
+    const user = JSON.parse(sessionStorage.getItem('user')!).email; 
+    this.messageService.addMessage(
       user,
       date,
       text,
       geo
-    })
+    )
     this.inputMessage.value = ''
     this.scrollToEnd();
-    console.log(this.inputMessage.value + sessionStorage.getItem('user'))
-    // console.log(this.inputMessage.value + sessionStorage["user[email]"])
   }
 
   async scrollToEnd(){
@@ -132,8 +130,7 @@ displayName = 'Paquito'
   }
 
   showMessage(i){
-    this.inputMessage = this.el.nativeElement.getElementsByTagName('input')[0];
-    const mensajesContenido = this.inputMessage.value;
+    const mensajesContenido = this.el.nativeElement.getElementsByTagName('input')[0].value;
     const myMessages = this.renderer.createElement('div');
     const otherMessages = this.renderer.createElement('div');
     const data = this.renderer.createElement('div');
@@ -141,7 +138,7 @@ displayName = 'Paquito'
     otherMessages.className = 'otherMessages';
     data.className = 'data';
 
-    if(this.messages[i].user === this.authService.userData.email){
+    if(this.messages[i].user === this.authService.userData?.email){
       const myel = this.renderer.createElement('div');
       myel.className = 'myMessage'
       myel.innerHTML = '';
@@ -177,5 +174,4 @@ displayName = 'Paquito'
       this.renderer.appendChild(mensajesContenido,otherMessages);
     }
   }
-
 }

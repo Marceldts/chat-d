@@ -13,15 +13,19 @@
       <ion-label position="floating">Password</ion-label>
       <ion-input required formControlName="password" type="password"></ion-input>
     </ion-item>
-    <ion-row>
-      <ion-button shape="round" block color="primary" (click)="onLogin()" [disabled]="!loginForm.valid">Iniciar sesión</ion-button>
-    </ion-row>
-    <ion-row>
-      <ion-label>No tienes cuenta? Regístrate aquí</ion-label>
-    </ion-row>
-    <ion-row>
-      <ion-button shape="round" block color="primary" routerLink="/register">Registrarme</ion-button>
-    </ion-row>
+    <div class="bot">
+      <ion-row >
+        <ion-button shape="round" block color="primary" (click)="onLogin()" [disabled]="!loginForm.valid">Iniciar sesión</ion-button>
+      </ion-row>
+    </div>
+      <ion-row>
+        <ion-label class="bot">No tienes cuenta? Regístrate aquí</ion-label>
+      </ion-row>
+    <div class="bot">
+      <ion-row>
+        <ion-button shape="round" block color="primary" routerLink="/register">Registrarme</ion-button>
+      </ion-row>
+    </div>
   </form>
   <!-- <form [formGroup]="loginForm">
       <div class="col">

@@ -15,31 +15,22 @@ export class MessageService {
     this.messageDB = this.db.list('/messages', (ref) => ref.orderByChild('date'))
    }
 
-   addMessage(msg: Message){
-    this.messageDB.push(msg)
-    // this.messageDB.push({
+  addMessage(user: string, date: string, text: string, geo:string){
+    this.messageDB.push({
+      user, date, text, geo
+    });
+  }
 
-    //   user: 'ManolitoPiesDePlata',
-
-    //   date: new Date().toLocaleDateString(),
-
-    //   text: 'Mensaje de prueba',
-
-    //   geo: null
-
-    // });
-   }
-
-   getMessage(): Observable<Message[]>{
+  getMessage(): Observable<Message[]>{
     return this.messageDB.snapshotChanges().pipe(map((changes) => changes.map((c) => this.getUserFromPayload(c.payload))))
-   }
+  }
 
-   getUserFromPayload(payload: any): Message{
+  getUserFromPayload(payload: any): Message{
     return{
       $key: payload.key,
       ...payload.val()
     }
-   }
+  }
 
 }
 

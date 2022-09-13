@@ -1,4 +1,4 @@
-<<ion-header [translucent]="true">
+<ion-header [translucent]="true">
   <ion-toolbar>
     <ion-row>
       <ion-title class="ion-text-center">Chat</ion-title>
@@ -11,13 +11,17 @@
 
 <ion-content class="ion-content" [scrollEvents]="true" onload="scrollToBottom()">
   
-  <div #messagesContent class="messages"></div>
+  <!-- <div #messagesContent class="messages"></div>
   <div class="scroll" (click)="scrollToBottom()" *ngIf="!compScroll()"></div>
   <ion-infinite-scroll (ionInfinite)="loadData()">
     <ion-infinite-scroll-content class="loadingSpinner"
       loadingSpinner="circular">
     </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  </ion-infinite-scroll> -->
+  
+  <div *ngFor="let mesage of messages" class="msg">
+    <b>{{mesage.user}}:</b> {{mesage.text}}
+  </div>
 </ion-content>
   
   <ion-footer>

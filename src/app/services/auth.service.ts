@@ -28,7 +28,7 @@ export class AuthService {
     return user;
     }
 
-  async register(email, password, displayName){
+  async register(email, password, displayName?){
     FirebaseServiceService.getFirebaseConfig()
     const auth = getAuth();
     const user = await createUserWithEmailAndPassword(auth, email, password).then((result) => this.setUserData(result.user))

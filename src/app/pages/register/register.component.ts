@@ -22,13 +22,13 @@ export class RegisterComponent implements OnInit {
     this.registerForm = this.fb.group({
     email: ['', [Validators.required, Validators.email]],
     password: ['', [Validators.required, Validators.minLength(6)]],
-    displayName: ['', Validators.required]
+    // displayName: ['', Validators.required]
   })
 }
 
   onRegister(){
     const {email, password, displayName} = this.registerForm.value;
-    this.authService.register(email, password, displayName).then(() => 
+    this.authService.register(email, password).then(() => 
     this.authService.login(email, password) && this.router.navigate(['/chat']))
   }
 }
