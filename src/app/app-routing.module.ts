@@ -11,16 +11,17 @@ const routes: Routes = [
   {
     path: '',
     component: AppComponent,
-    title: 'Inicio'
+    title: 'Inicio',
    },
    {
       path: 'home',
-      loadChildren: () => import('./pages/home/home.module').then( m => m.HomeModule),
+      loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule),
+      // component: HomeComponent,
       title: 'Inicio'
    },
    {
      path: 'login',
-      loadChildren: () => import('./pages/login/login.module').then( m => m.LoginModule),
+     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginModule),
      // component: LoginComponent,
      title: 'Inicio de sesión'
    },
@@ -34,6 +35,7 @@ const routes: Routes = [
      path: 'chat',
      canActivate: [AuthGuard],
      loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatModule),
+     title: 'Chat'
     //  component: ChatComponent
    }
 ];
