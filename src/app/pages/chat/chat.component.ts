@@ -47,6 +47,7 @@ geo: string;
       }
       this.numCurrentY = i.detail.currentY
     })
+    //Mirar si puedo usar alguna alternativa al subscribe para que no me cargue todos los mensajes anteriores al login
     this.messageService.getMessage().subscribe((m) =>{
       this.messages = m
     })
