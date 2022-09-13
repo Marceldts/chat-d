@@ -7,6 +7,7 @@ import { IonicModule } from '@ionic/angular';
 import { ChatComponent } from './chat.component';
 import { FirebaseServiceService } from 'src/app/services/firebase-service.service';
 import {} from '@angular/fire/database';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 @NgModule({

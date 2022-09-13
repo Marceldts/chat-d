@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { IonContent, IonInfiniteScroll } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { Message, MessageService } from 'src/app/services/message.service';
+import { Geolocation } from '@capacitor/geolocation';
 
 @Component({
   selector: 'app-chat',
@@ -23,6 +24,7 @@ end: boolean = false
 numScrollTop: number;
 numCurrentY: number;
 displayName = 'Paquito'
+geo: string;
 
   constructor(
     private readonly authService: AuthService,
@@ -33,6 +35,9 @@ displayName = 'Paquito'
     ) { 
       this.messageService.getMessage().subscribe(m => this.messages = m)
       this.length = 0;
+      Geolocation.getCurrentPosition().then(g=>{
+        this.geo = ''+g.coords.latitude.toFixed(2).toString()+', '+g.coords.longitude.toFixed(2).toString();
+    }); 
     }
 
   ngOnInit() {
@@ -51,13 +56,12 @@ displayName = 'Paquito'
     this.inputMessage = this.el.nativeElement.getElementsByTagName('input')[0];
     const text = this.inputMessage.value
     const date = new Date().toLocaleDateString();
-    const geo = null;
     const user = JSON.parse(sessionStorage.getItem('user')!).email; 
     this.messageService.addMessage(
       user,
       date,
       text,
-      geo
+      this.geo
     )
     this.inputMessage.value = ''
   }
@@ -66,20 +70,6 @@ displayName = 'Paquito'
   onLogoff(){
     this.authService.logoff().then(() => this.router.navigate(['']))
   }
-
-  compScroll(): boolean{
-    if(length === this.messages.length){
-      if(this.numCurrentY === this.numScrollTop){
-        this.end = true;
-      }else{
-        this.end = false;
-      }
-    }else{
-      this.end=false;
-    }
-    return this.end;
-  }
-
 
   wait(t) {
     return new Promise<void>((resolve) => {
