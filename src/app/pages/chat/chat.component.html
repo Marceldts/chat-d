@@ -19,9 +19,10 @@
     </ion-infinite-scroll-content>
   </ion-infinite-scroll> -->
   
-  <div *ngFor="let mesage of messages" class="msg">
-    <b>{{mesage.user}}:</b> {{mesage.text}}
-  </div>
+  <ion-item *ngFor="let mesage of messages" class="msg">
+    <ion-text color="tertiary"><b>{{mesage.user}}</b></ion-text> 
+    <ion-text color="secondary">: {{mesage.text}}</ion-text>
+  </ion-item>
 </ion-content>
   
   <ion-footer>
