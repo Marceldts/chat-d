@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, Renderer2 } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, Renderer2, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonContent, IonInfiniteScroll } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
@@ -19,12 +19,14 @@ export class ChatComponent implements OnInit {
 messages: Array<Message> = []
 inputMessage: any
 ubi: string
-length: number
 end: boolean = false
 numScrollTop: number;
 numCurrentY: number;
 displayName = 'Paquito'
 geo: string;
+
+length = 10;
+messageList = []
 
   constructor(
     private readonly authService: AuthService,
@@ -41,21 +43,49 @@ geo: string;
     }
 
   ngOnInit() {
-    this.content.ionScroll.subscribe((i) => {
-      if(this.numScrollTop<i.detail.scrollTop){
-        this.numScrollTop = i.detail.scrollTop
-      }
-      this.numCurrentY = i.detail.currentY
-    })
     //Mirar si puedo usar alguna alternativa al subscribe para que no me cargue todos los mensajes anteriores al login
     this.messageService.getMessage().subscribe((m) =>{
       this.messages = m
     })
+    // this.messageList = this.messages.splice(0, this.topLimit)
   }
+
+
+  async loadData() {
+    if(this.length < this.messages.length){
+      await this.wait(500)
+      this.infiniteScroll.complete();
+      this.append(10)
+    }
+    else{
+      this.infiniteScroll.disabled = true
+    }
+  }
+
+  async append(n){
+    var t = this.length;
+    if(t + n <= this.messages.length){
+      for(let i = t; i < t + n; i++){
+        // await this.showMessage(i)
+        length++;
+      }
+    } else {
+      for (let i = t; i < this.messages.length; i++){
+        // await this.showMessage(i)
+        length++;
+      }
+    }
+  }
+
+  // showMessage(i){
+  //   this.inputMessage = this.el.nativeElement.getElementsByTagName('input')[0];
+  //   const text = this.inputMessage.value
+  // }
 
   onSendMessage(){
     this.inputMessage = this.el.nativeElement.getElementsByTagName('input')[0];
     const text = this.inputMessage.value
+    if(text.length < 1){return null;}
     const date = new Date().toLocaleDateString();
     const user = JSON.parse(sessionStorage.getItem('user')!).email; 
     this.messageService.addMessage(
@@ -66,7 +96,6 @@ geo: string;
     )
     this.inputMessage.value = ''
   }
-
 
   onLogoff(){
     this.authService.logoff().then(() => this.router.navigate(['']))

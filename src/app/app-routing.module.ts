@@ -10,8 +10,8 @@ import { RegisterComponent } from './pages/register/register.component';
 const routes: Routes = [
   {
     path: '',
-    component: AppComponent,
-    title: 'Inicio',
+    redirectTo: '/home',
+    pathMatch: 'full'
    },
    {
       path: 'home',

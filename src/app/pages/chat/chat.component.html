@@ -23,6 +23,14 @@
     <ion-text color="tertiary"><b>{{mesage.user}}</b></ion-text> 
     <ion-text color="secondary">: {{mesage.text}}</ion-text>
   </ion-item>
+
+  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+    <ion-infinite-scroll-content
+      loadingSpinner="bubbles"
+      loadingText="Cargando más mensajes...">
+    </ion-infinite-scroll-content>
+  </ion-infinite-scroll>
+
 </ion-content>
   
   <ion-footer>
