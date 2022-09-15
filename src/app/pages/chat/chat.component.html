@@ -10,36 +10,36 @@
 </ion-header>
 
 <ion-content class="ion-content" [scrollEvents]="true">
-  
-  <!-- <div #messagesContent class="messages"></div>
-  <div class="scroll" (click)="scrollToBottom()" *ngIf="!compScroll()"></div>
-  <ion-infinite-scroll (ionInfinite)="loadData()">
-    <ion-infinite-scroll-content class="loadingSpinner"
-      loadingSpinner="circular">
-    </ion-infinite-scroll-content>
-  </ion-infinite-scroll> -->
-  
-  <ion-item *ngFor="let mesage of messages" class="msg">
-    <ion-text color="tertiary"><b>{{mesage.user}}</b></ion-text> 
-    <ion-text color="secondary">: {{mesage.text}}</ion-text>
-  </ion-item>
+  <ion-list>
+    <ion-item *ngFor="let mesage of messages | slice: 0:slice" class="msg">
+      <ion-text color="tertiary"
+        ><b>{{ mesage.user }}</b></ion-text
+      >
+      <ion-text color="secondary">: {{ mesage.text }}</ion-text>
+    </ion-item>
+  </ion-list>
 
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
-      loadingText="Cargando más mensajes...">
+      loadingText="Cargando más mensajes..."
+    >
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
-
 </ion-content>
-  
-  <ion-footer>
-    <ion-toolbar>
-      <ion-row>
-        <ion-input type="text" placeholder="Escribe aquí" minlength="1" id="inputMessage"></ion-input>
-        <ion-button (click)="onSendMessage()" class="enviar">
-          <ion-icon slot="icon-only" name="add"></ion-icon>
-        </ion-button>
-      </ion-row>
-    </ion-toolbar>
-  </ion-footer>
+
+<ion-footer>
+  <ion-toolbar>
+    <ion-row>
+      <ion-input
+        type="text"
+        placeholder="Escribe aquí"
+        minlength="1"
+        id="inputMessage"
+      ></ion-input>
+      <ion-button (click)="onSendMessage()" class="enviar">
+        <ion-icon slot="icon-only" name="add"></ion-icon>
+      </ion-button>
+    </ion-row>
+  </ion-toolbar>
+</ion-footer>

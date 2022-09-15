@@ -16,17 +16,16 @@ export class ChatComponent implements OnInit {
 @ViewChild (IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
 @ViewChild ('messagesContent', {static:true}) messagesContent: ElementRef;
 
-messages: Array<Message> = []
-inputMessage: any
-ubi: string
-end: boolean = false
+messages: Array<Message> = [];
+inputMessage: any;
+ubi: string;
+geo: string;
 numScrollTop: number;
 numCurrentY: number;
-displayName = 'Paquito'
-geo: string;
+end = false;
+slice = 17;
 
-length = 10;
-messageList = []
+
 
   constructor(
     private readonly authService: AuthService,
@@ -35,8 +34,6 @@ messageList = []
     private messageService: MessageService,
     private renderer: Renderer2
     ) { 
-      this.messageService.getMessage().subscribe(m => this.messages = m)
-      this.length = 0;
       Geolocation.getCurrentPosition().then(g=>{
         this.geo = ''+g.coords.latitude.toFixed(2).toString()+', '+g.coords.longitude.toFixed(2).toString();
     }); 
@@ -51,36 +48,15 @@ messageList = []
   }
 
 
-  async loadData() {
-    if(this.length < this.messages.length){
-      await this.wait(500)
+  loadData(event) {
+    setTimeout(() => {
+      this.slice += 5;
       this.infiniteScroll.complete();
-      this.append(10)
-    }
-    else{
-      this.infiniteScroll.disabled = true
-    }
-  }
-
-  async append(n){
-    var t = this.length;
-    if(t + n <= this.messages.length){
-      for(let i = t; i < t + n; i++){
-        // await this.showMessage(i)
-        length++;
+      if (this.slice > this.messages.length) {
+        event.target.disabled = true;
       }
-    } else {
-      for (let i = t; i < this.messages.length; i++){
-        // await this.showMessage(i)
-        length++;
-      }
-    }
+    }, 500);
   }
-
-  // showMessage(i){
-  //   this.inputMessage = this.el.nativeElement.getElementsByTagName('input')[0];
-  //   const text = this.inputMessage.value
-  // }
 
   onSendMessage(){
     this.inputMessage = this.el.nativeElement.getElementsByTagName('input')[0];
@@ -99,13 +75,5 @@ messageList = []
 
   onLogoff(){
     this.authService.logoff().then(() => this.router.navigate(['']))
-  }
-
-  wait(t) {
-    return new Promise<void>((resolve) => {
-      setTimeout(() => {
-        resolve();
-      }, t);
-    });
   }
 }
