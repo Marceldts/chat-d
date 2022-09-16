@@ -39,5 +39,5 @@ export interface Message {
   user: string;
   date: string;
   text: string;
-  geo: string;
+  geo?: string;
 }

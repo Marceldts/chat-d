@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild, Renderer2, OnDestroy } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
 import { IonContent, IonInfiniteScroll } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
@@ -32,7 +32,6 @@ slice = 17;
     private readonly router: Router,
     private el: ElementRef,
     private messageService: MessageService,
-    private renderer: Renderer2
     ) { 
       Geolocation.getCurrentPosition().then(g=>{
         this.geo = ''+g.coords.latitude.toFixed(2).toString()+', '+g.coords.longitude.toFixed(2).toString();
@@ -64,12 +63,17 @@ slice = 17;
     if(text.length < 1){return null;}
     const date = Date()
     const user = JSON.parse(sessionStorage.getItem('user')!).email; 
+    try {
       this.messageService.addMessage(
-      user,
-      date,
-      text,
-      this.geo
-    )
+        user,
+        date,
+        text,
+        this.geo
+      )
+    } catch (error) {
+        alert('Para poder enviar mensajes, por favor, permite la localización')
+    }
+
     this.inputMessage.value = ''
   }
 
