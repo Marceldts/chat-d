@@ -28,8 +28,6 @@ export class LoginComponent implements OnInit {
   onLogin(){
     const { email, password } = this.loginForm.value;
     this.authService.login(email, password).then(() => this.router.navigate(['/chat']));
-    // if(this.authService.login(email, password).toString() === sessionStorage.getItem('user')){
-      
   }
 
 }
