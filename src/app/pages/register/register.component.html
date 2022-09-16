@@ -1,4 +1,3 @@
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <ion-header>
   <ion-toolbar>
     <ion-title class="ion-text-center">Crear una cuenta</ion-title>
@@ -17,18 +16,19 @@
       <ion-label position="floating">Nombre de usuario</ion-label>
       <ion-input required formControlName="displayName" type="text"></ion-input>
     </ion-item> -->
-    <div class="bot">    
-      <ion-button shape="round" block color="primary" [disabled]="!registerForm.valid" (click)="onRegister()">Registrarme</ion-button>
-    </div>
-    <!-- <ion-item> -->
-      <ion-row>
-            <ion-label class="bot">No querías registrarte? Inicia sesión aquí</ion-label>
-      </ion-row>    
-      <div class="bot">
-        <ion-row>
-          <ion-button shape="round" block color="primary" routerLink="/login">Iniciar sesión</ion-button>
-        </ion-row>
+    <div class="flex">
+      <div class="bot">    
+        <ion-button class="but" shape="round" block color="primary" [disabled]="!registerForm.valid" (click)="onRegister()">Registrarme</ion-button>
       </div>
+      <!-- <ion-item> -->
+        <ion-row>
+              <ion-label class="bot">No querías registrarte? Inicia sesión aquí</ion-label>
+        </ion-row>    
+        <div>
+          <ion-row>
+            <ion-button class="but" shape="round" block color="primary" routerLink="/login">Iniciar sesión</ion-button>
+          </ion-row>
+        </div></div>
     <!-- </ion-item> -->
   </form>
   <!-- <form [formGroup]="registerForm">

@@ -1,35 +1,46 @@
-@media only screen and (min-width: 413) {
+// @media only screen and (min-width: 413) {
     
-div.bot{
-  padding-inline-start: 43%;
-  padding-top: 5px;
-}
-ion-label.bot{
-  padding: 4.17%;
-  padding-inline-start: 40%;
-  text-align: center;
-  -ms-text-size-adjust: auto;
-}
+// div.bot{
+//   padding-inline-start: 43%;
+//   padding-top: 5px;
+// }
+// ion-label.bot{
+//   padding: 4.17%;
+//   padding-inline-start: 40%;
+//   text-align: center;
+//   -ms-text-size-adjust: auto;
+// }
 
-ion-button.but{
-  font-size: large;
-  min-height: 5%;
-}
-}
+// ion-button.but{
+//   font-size: large;
+//   min-height: 5%;
+// }
+// }
 
-div.bot{
-  padding-top: 5%;
+// div.bot{
+//   padding-top: 5%;
+// }
+// ion-label.bot{
+//    padding: 4.17%;
+//    padding-inline-start: 17%;
+//    text-align: center;
+//    font-size: 90%;
+// }
+// ion-button.but{
+//    font-size: large;
+//    min-height: 5%;
+//    min-width: 80%;
+//    padding-inline-start: 23%;
+//     }
+
+
+.flex{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
+  ion-button{
+      width: 10rem;
+  }
+  padding-top: 50%;
 }
-ion-label.bot{
-   padding: 4.17%;
-   padding-inline-start: 17%;
-   text-align: center;
-   font-size: 90%;
-}
-ion-button.but{
-   font-size: large;
-   min-height: 5%;
-   min-width: 80%;
-   padding-inline-start: 23%;
-    }
-  

@@ -1,4 +1,3 @@
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <ion-header>
   <ion-toolbar>
     <ion-title class="ion-text-center">Inicio de sesión</ion-title>
@@ -14,18 +13,20 @@
       <ion-label position="floating">Password</ion-label>
       <ion-input required formControlName="password" type="password"></ion-input>
     </ion-item>
-    <div class="bot">
-      <ion-row >
-        <ion-button class="but" shape="round" block color="primary" (click)="onLogin()" [disabled]="!loginForm.valid">Iniciar sesión</ion-button>
-      </ion-row>
-    </div>
-      <ion-row>
-        <ion-label class="bot">No tienes cuenta? Regístrate aquí</ion-label>
-      </ion-row>
-    <div>
-      <ion-row>
-        <ion-button class="but" shape="round" block color="primary" routerLink="/register">Registrarme</ion-button>
-      </ion-row>
+    <div class="flex">
+      <div class="bot">
+        <ion-row >
+          <ion-button class="but" shape="round" block color="primary" (click)="onLogin()" [disabled]="!loginForm.valid">Iniciar sesión</ion-button>
+        </ion-row>
+      </div>
+        <ion-row>
+          <ion-label class="bot">No tienes cuenta? Regístrate aquí</ion-label>
+        </ion-row>
+      <div>
+        <ion-row>
+          <ion-button class="but" shape="round" block color="primary" routerLink="/register">Registrarme</ion-button>
+        </ion-row>
+      </div>
     </div>
   </form>
   <!-- <form [formGroup]="loginForm">
