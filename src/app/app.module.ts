@@ -15,6 +15,7 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { FirebaseServiceService } from './services/firebase-service.service';
 import { ChatComponent } from './pages/chat/chat.component';
 import { CommonModule } from '@angular/common';
+import { ServiceWorkerModule } from '@angular/service-worker';
 // import { AngularFireModule } from '@angular/fire';
 // import { AngularFireDatabaseModule } from '@angular/fire/database';
 
@@ -28,7 +29,13 @@ import { CommonModule } from '@angular/common';
     FormsModule, 
     ReactiveFormsModule, 
     AngularFireModule.initializeApp(FirebaseServiceService.firebaseConfig),
-    CommonModule
+    CommonModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    })
   ],
   providers: [{ provide: RouteReuseStrategy, useClass: IonicRouteStrategy }],
   bootstrap: [AppComponent],

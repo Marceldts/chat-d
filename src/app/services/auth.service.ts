@@ -24,7 +24,6 @@ export class AuthService {
       email: user.email
       }));
     });
-      
     return user;
     }
 
@@ -32,7 +31,6 @@ export class AuthService {
     FirebaseServiceService.getFirebaseConfig()
     const auth = getAuth();
     const user = await createUserWithEmailAndPassword(auth, email, password).then((result) => this.setUserData(result.user))
-    
     // .then(function(result) {
     //   return result.user.updateProfile()
     //   ({
