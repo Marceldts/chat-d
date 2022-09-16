@@ -12,10 +12,10 @@
 <ion-content class="ion-content" [scrollEvents]="true">
   <ion-list>
     <ion-item *ngFor="let mesage of messages | slice: 0:slice" class="msg">
-      <ion-text color="tertiary"
-        ><b>{{ mesage.user }}</b></ion-text
-      >
-      <ion-text color="secondary">: {{ mesage.text }}</ion-text>
+      <ion-row>
+        <ion-text color="tertiary"><b>{{ mesage.user }}: &nbsp;</b></ion-text>
+        <ion-text color="secondary"> {{ mesage.text }}</ion-text>
+      </ion-row>
     </ion-item>
   </ion-list>
 
