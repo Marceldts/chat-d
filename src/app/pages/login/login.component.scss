@@ -1,14 +1,33 @@
+@media only screen and (min-width: 413) {
+    ion-label{
+    padding: 5px;
+    }
+    div.bot{
+        padding-inline-start: 43%;
+        padding-top: 5px;
+    }
+    ion-label.bot{
+        padding: 10px;
+        padding-inline-start: 43.5%;
+    }
+    ion-button{
+        min-width: 25%;
+    }
+}
 ion-label{
     padding: 5px;
 }
 div.bot{
-    padding-inline-start: 43%;
-    padding-top: 5px;
+    padding-top: 5%;
 }
 ion-label.bot{
-    padding: 10px;
-    padding-inline-start: 43.5%;
+    padding: 4.17%;
+    padding-inline-start: 20%;
+    text-align: center;
+    font-size: 90%;
 }
-ion-button{
-    min-width: 25%;
+ion-button.but{
+    min-height: 5%;
+    min-width: 80%;
+    padding-inline-start: 23%;
 }
