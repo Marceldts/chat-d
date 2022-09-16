@@ -62,7 +62,7 @@ slice = 17;
     this.inputMessage = this.el.nativeElement.getElementsByTagName('input')[0];
     const text = this.inputMessage.value
     if(text.length < 1){return null;}
-    const date = new Date().toDateString();
+    const date = Date()
     const user = JSON.parse(sessionStorage.getItem('user')!).email; 
       this.messageService.addMessage(
       user,
