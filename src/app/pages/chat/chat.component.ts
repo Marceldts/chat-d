@@ -78,6 +78,6 @@ slice = 17;
   }
 
   onLogoff(){
-    this.authService.logoff().then(() => this.router.navigate(['']))
+    if(confirm('¿Seguro que quieres cerrar sesión?')) this.authService.logoff().then(() => this.router.navigate(['']))
   }
 }

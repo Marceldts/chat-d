@@ -30,5 +30,6 @@ export class RegisterComponent implements OnInit {
       const {email, password, displayName} = this.registerForm.value;
       this.authService.register(email, password).then(() => 
       this.authService.login(email, password).then(() =>this.router.navigate(['/chat'])))
+
   }
 }
