@@ -36,6 +36,7 @@
         placeholder="Escribe aquí"
         minlength="1"
         id="inputMessage"
+        (keyup.enter)="onSendMessage()"
       ></ion-input>
       <ion-button (click)="onSendMessage()" class="enviar">
         <ion-icon slot="icon-only" name="add"></ion-icon>
