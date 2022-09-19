@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FirebaseError } from 'firebase/app';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -27,7 +28,8 @@ export class LoginComponent implements OnInit {
 
   onLogin(){
     const { email, password } = this.loginForm.value;
-    this.authService.login(email, password).then(() => this.router.navigate(['/chat']));
+    (this.authService.login(email, password).then(() => this.router.navigate(['/chat'])) ).catch(e => 
+      alert(e))
   }
 
 }
