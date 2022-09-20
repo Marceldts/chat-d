@@ -24,7 +24,7 @@ numScrollTop: number;
 numCurrentY: number;
 end = false;
 slice = 17;
-
+mlength;
 
 
   constructor(
@@ -42,6 +42,7 @@ slice = 17;
     //Mirar si puedo usar alguna alternativa al subscribe para que no me cargue todos los mensajes anteriores al login
     this.messageService.getMessage().subscribe((m) =>{
       this.messages = m
+      this.mlength = m.length
     })
     // this.messageList = this.messages.splice(0, this.topLimit)
   }

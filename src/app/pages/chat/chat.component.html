@@ -11,7 +11,8 @@
 
 <ion-content class="ion-content" [scrollEvents]="true">
   <ion-list>
-    <ion-item *ngFor="let mesage of messages | slice: 0:slice" class="msg">
+    <!-- Antes, el slice estaba de 0 a slice, pero lo puse de slice a messages.length para que no me carguen todos los mensajes -->
+    <ion-item *ngFor="let mesage of messages | slice: slice:messages.length" class="msg">
       <ion-row>
         <ion-text color="tertiary"><b>{{ mesage.user }}: &nbsp;</b></ion-text>
         <ion-text color="secondary"> {{ mesage.text }}</ion-text>
