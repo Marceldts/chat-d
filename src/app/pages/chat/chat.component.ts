@@ -24,7 +24,7 @@ numScrollTop: number;
 numCurrentY: number;
 end = false;
 slice = 0;
-sliceIni;
+ind;
 
 
   constructor(
@@ -43,6 +43,11 @@ sliceIni;
     this.messageService.getMessage().subscribe((m) =>{
       this.messages = m
     })
+    switch(true){
+      case (this.messages.length < 10) : this.ind = 0;
+      case (this.messages.length > 10 && this.messages.length < 20) : this.ind = 10;
+      default : this.ind = this.messages.length - 10
+    }
     // this.messageList = this.messages.splice(0, this.topLimit)
   }
 
@@ -50,7 +55,6 @@ sliceIni;
   loadData(event) {
     setTimeout(() => {
       this.slice += 5;
-      this.sliceIni += 5;
       this.infiniteScroll.complete();
       if (this.slice > this.messages.length) {
         event.target.disabled = true;

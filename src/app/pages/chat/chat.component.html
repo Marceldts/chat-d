@@ -14,7 +14,7 @@
     <!-- Antes, el slice estaba de 0 a slice, pero lo puse de slice a messages.length para que no me carguen todos los mensajes
         Vuelvo a ponerlo como antes porque si no hay suficientes mensajes no los carga
     -->
-    <ion-item *ngFor="let mesage of messages | slice: (messages.length-slice):slice" class="msg">
+    <ion-item *ngFor="let mesage of messages | slice: ind:messages.length" class="msg">
       <ion-row>
         <ion-text color="tertiary"><b>{{ mesage.user }}: &nbsp;</b></ion-text>
         <ion-text color="secondary"> {{ mesage.text }}</ion-text>
