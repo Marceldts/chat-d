@@ -44,7 +44,7 @@ ind;
       this.messages = m
     })
     switch(true){
-      case (this.messages.length < 10) : this.ind = 0;
+      case (this.messages.length <= 10) : this.ind = 0;
       case (this.messages.length > 10 && this.messages.length < 20) : this.ind = 10;
       default : this.ind = this.messages.length - 10
     }
