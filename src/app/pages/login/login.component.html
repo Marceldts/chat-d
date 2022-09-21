@@ -7,11 +7,11 @@
   <form [formGroup]="loginForm">
     <ion-item>
       <ion-label position="floating">E-Mail</ion-label>
-      <ion-input required formControlName="email" type="text" (keyup.enter)="onLogin()"></ion-input>
+      <ion-input required formControlName="email" inputmode="email" (keyup.enter)="onLogin()"></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Password</ion-label>
-      <ion-input required formControlName="password" type="password" (keyup.enter)="onLogin()"></ion-input>
+      <ion-input required formControlName="password" type="password" minlength="6" (keyup.enter)="onLogin()"></ion-input>
     </ion-item>
     <div class="flex">
       <div class="bot">

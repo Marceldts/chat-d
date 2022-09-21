@@ -39,10 +39,19 @@
   flex-direction: column;
   align-items: center;
   align-content: center;
+  
   ion-button{
         width: 10rem;
       --background: #3689ff;
       --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
   }
   padding-top: 17%;
+
+.but{
+  transition: all 0.3s ease;
+  transform: scale(1);
+}
+.but:hover {
+  transform: scale(1.2) perspective(1px)
+}
 }

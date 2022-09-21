@@ -23,8 +23,8 @@ geo: string;
 numScrollTop: number;
 numCurrentY: number;
 end = false;
-slice = 17;
-mlength;
+slice = 0;
+sliceIni;
 
 
   constructor(
@@ -42,7 +42,6 @@ mlength;
     //Mirar si puedo usar alguna alternativa al subscribe para que no me cargue todos los mensajes anteriores al login
     this.messageService.getMessage().subscribe((m) =>{
       this.messages = m
-      this.mlength = m.length
     })
     // this.messageList = this.messages.splice(0, this.topLimit)
   }
@@ -51,6 +50,7 @@ mlength;
   loadData(event) {
     setTimeout(() => {
       this.slice += 5;
+      this.sliceIni += 5;
       this.infiniteScroll.complete();
       if (this.slice > this.messages.length) {
         event.target.disabled = true;

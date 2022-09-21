@@ -33,7 +33,6 @@
 //         padding-inline-start: 23%;
 //     }
 // }
-
 .flex{
     display: flex;
     flex-direction: column;
@@ -52,9 +51,19 @@
     ion-button.but1{
         --background: #3689ff;
         --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+        transition: all 0.3s ease;
+        transform: scale(1);
     }
     ion-button.but2{
         --border-color: #3689ff;
         --box-shadow: 0 2px 6px 0 rgb(0, 0, 0, 0.25);
+        transition: all 0.3s ease;
+        transform: scale(1);
+    }
+    .but1:hover {
+        transform: scale(1.2) perspective(1px)
+    }
+    .but2:hover {
+        transform: scale(1.2) perspective(1px)
     }
 }
