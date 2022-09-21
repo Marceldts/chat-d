@@ -43,7 +43,11 @@ ion-input{
     border-radius: 5px;
     color: white;
 }
+ion-button{
+    --background: #3689ff;
+}
 ion-button.enviar{
+    --background: #3689ff;
     margin: 10px;
     margin-left: auto;
     border-radius: 5px;
