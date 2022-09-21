@@ -5,6 +5,7 @@ import { AuthGuard } from './guards/auth.guard';
 import { ChatComponent } from './pages/chat/chat.component';
 import { HomeComponent } from './pages/home/home.component';
 import { LoginComponent } from './pages/login/login.component';
+import { NotFoundComponent } from './pages/not-found/not-found.component';
 import { RegisterComponent } from './pages/register/register.component';
 
 const routes: Routes = [
@@ -37,6 +38,16 @@ const routes: Routes = [
      loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatModule),
      title: 'Chat'
     //  component: ChatComponent
+   },
+   {
+    path: '404',
+    component: NotFoundComponent,
+    title: 'Error: Página no encontrada'
+   },
+   {
+    path: '**',
+    pathMatch: 'full',
+    redirectTo: '404'
    }
 ];
 
