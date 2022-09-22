@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent, IonInfiniteScroll } from '@ionic/angular';
+import { IonContent, IonDatetime, IonInfiniteScroll } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { Message, MessageService } from 'src/app/services/message.service';
 import { Geolocation } from '@capacitor/geolocation';
@@ -25,6 +25,7 @@ numCurrentY: number;
 end = false;
 slice = 0;
 ind;
+user = JSON.parse(sessionStorage.getItem('user')!).email; 
 
 
   constructor(
@@ -48,29 +49,36 @@ ind;
       case (this.messages.length > 10 && this.messages.length < 20) : this.ind = 10;
       default : this.ind = this.messages.length - 10
     }
+    this.scrollToBottomSetTimeOut(1100)
     // this.messageList = this.messages.splice(0, this.topLimit)
   }
 
+  scrollToBottomSetTimeOut(time){
 
-  loadData(event) {
     setTimeout(() => {
-      this.slice += 5;
-      this.infiniteScroll.complete();
-      if (this.slice > this.messages.length) {
-        event.target.disabled = true;
-      }
-    }, 500);
-  }
+      this.content.scrollToBottom();
+      }, time); 
+    }
+
+  // Comentado porque solo se usaba en el infinite scroll
+  // loadData(event) {
+  //   setTimeout(() => {
+  //     this.slice += 5;
+  //     this.infiniteScroll.complete();
+  //     if (this.slice > this.messages.length) {
+  //       event.target.disabled = true;
+  //     }
+  //   }, 500);
+  // }
 
   onSendMessage(){
     this.inputMessage = this.el.nativeElement.getElementsByTagName('input')[0];
     const text = this.inputMessage.value
     if(text.length < 1){return null;}
-    const date = Date()
-    const user = JSON.parse(sessionStorage.getItem('user')!).email; 
+    const date = Date.now().toString()
     try {
       this.messageService.addMessage(
-        user,
+        this.user,
         date,
         text,
         this.geo
@@ -80,6 +88,7 @@ ind;
     }
 
     this.inputMessage.value = ''
+    this.scrollToBottomSetTimeOut(10)
   }
 
   onLogoff(){
