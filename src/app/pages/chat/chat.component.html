@@ -9,12 +9,12 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-content" [scrollEvents]="true">
+<ion-content class="ion-content" [scrollEvents]="true" onload="scrollOnInit()">
   <ion-list>
     <!-- Antes, el slice estaba de 0 a slice, pero lo puse de slice a messages.length para que no me carguen todos los mensajes
         Vuelvo a ponerlo como antes porque si no hay suficientes mensajes no los carga
     -->
-    <ion-item *ngFor="let mesage of messages | slice: ind:messages.length" class="msg">
+    <ion-item *ngFor="let mesage of messages | slice: 0:messages.length" class="msg">
       <ion-row>
         <ion-text color="tertiary"><b>{{ mesage.user }}: &nbsp;</b></ion-text>
         <ion-text color="secondary"> {{ mesage.text }}</ion-text>
@@ -22,13 +22,13 @@
     </ion-item>
   </ion-list>
 
-  <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
+  <!-- <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
       loadingText="Cargando más mensajes..."
     >
     </ion-infinite-scroll-content>
-  </ion-infinite-scroll>
+  </ion-infinite-scroll> -->
 </ion-content>
 
 <ion-footer>

@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent, IonInfiniteScroll } from '@ionic/angular';
+import { IonContent, IonDatetime, IonInfiniteScroll } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { Message, MessageService } from 'src/app/services/message.service';
 import { Geolocation } from '@capacitor/geolocation';
@@ -48,8 +48,16 @@ ind;
       case (this.messages.length > 10 && this.messages.length < 20) : this.ind = 10;
       default : this.ind = this.messages.length - 10
     }
+    this.scrollToBottomSetTimeOut()
     // this.messageList = this.messages.splice(0, this.topLimit)
   }
+
+  scrollToBottomSetTimeOut(){
+
+    setTimeout(() => {
+      this.content.scrollToBottom();
+      }, 1000); 
+    }
 
 
   loadData(event) {
@@ -66,7 +74,7 @@ ind;
     this.inputMessage = this.el.nativeElement.getElementsByTagName('input')[0];
     const text = this.inputMessage.value
     if(text.length < 1){return null;}
-    const date = Date()
+    const date = Date.now().toString()
     const user = JSON.parse(sessionStorage.getItem('user')!).email; 
     try {
       this.messageService.addMessage(
