@@ -12,49 +12,49 @@ const routes: Routes = [
   {
     path: '',
     redirectTo: '/home',
-    pathMatch: 'full'
-   },
-   {
-      path: 'home',
-      loadChildren: () => import('./pages/home/home.module').then(m => m.HomeModule),
-      // component: HomeComponent,
-      title: 'Inicio'
-   },
-   {
-     path: 'login',
-     loadChildren: () => import('./pages/login/login.module').then( m => m.LoginModule),
-     // component: LoginComponent,
-     title: 'Inicio de sesión'
-   },
-   {
-     path: 'register',
-     loadChildren: () => import('./pages/register/register.module').then( m => m.RegisterModule),
-     // component: RegisterComponent,
-     title: 'Registro'
-   },
-   {
-     path: 'chat',
-     canActivate: [AuthGuard],
-     loadChildren: () => import('./pages/chat/chat.module').then( m => m.ChatModule),
-     title: 'Chat'
-    //  component: ChatComponent
-   },
-   {
+    pathMatch: 'full',
+  },
+  {
+    path: 'home',
+    loadChildren: () =>
+      import('./pages/home/home.module').then((m) => m.HomeModule),
+    title: 'Inicio',
+  },
+  {
+    path: 'login',
+    loadChildren: () =>
+      import('./pages/login/login.module').then((m) => m.LoginModule),
+    title: 'Inicio de sesión',
+  },
+  {
+    path: 'register',
+    loadChildren: () =>
+      import('./pages/register/register.module').then((m) => m.RegisterModule),
+    title: 'Registro',
+  },
+  {
+    path: 'chat',
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./pages/chat/chat.module').then((m) => m.ChatModule),
+    title: 'Chat',
+  },
+  {
     path: '404',
     component: NotFoundComponent,
-    title: 'Error: Página no encontrada'
-   },
-   {
+    title: 'Error: Página no encontrada',
+  },
+  {
     path: '**',
     pathMatch: 'full',
-    redirectTo: '404'
-   }
+    redirectTo: '404',
+  },
 ];
 
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules }),
   ],
-  exports: [RouterModule]
+  exports: [RouterModule],
 })
 export class AppRoutingModule {}

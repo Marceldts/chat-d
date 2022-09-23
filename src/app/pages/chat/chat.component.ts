@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonContent, IonDatetime, IonInfiniteScroll } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
@@ -11,87 +11,87 @@ import { Geolocation } from '@capacitor/geolocation';
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit {
+  @ViewChild(IonContent, { static: true }) content: IonContent;
+  @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
+  @ViewChild('messagesContent', { static: true }) messagesContent: ElementRef;
 
-@ViewChild (IonContent,{static: true}) content: IonContent;
-@ViewChild (IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
-@ViewChild ('messagesContent', {static:true}) messagesContent: ElementRef;
-
-messages: Array<Message> = [];
-inputMessage: any;
-ubi: string;
-geo: string;
-numScrollTop: number;
-numCurrentY: number;
-end = false;
-slice = 0;
-ind;
-user = JSON.parse(sessionStorage.getItem('user')!).email; 
-
+  messages: Array<Message> = [];
+  inputMessage: any;
+  ubi: string;
+  geo: string;
+  numScrollTop: number;
+  numCurrentY: number;
+  end = false;
+  slice = 0;
+  ind;
+  user = JSON.parse(sessionStorage.getItem('user')!).email;
 
   constructor(
     private readonly authService: AuthService,
     private readonly router: Router,
     private el: ElementRef,
-    private messageService: MessageService,
-    ) { 
-      Geolocation.getCurrentPosition().then(g=>{
-        this.geo = ''+g.coords.latitude.toFixed(2).toString()+', '+g.coords.longitude.toFixed(2).toString();
-    }); 
-    }
+    private messageService: MessageService
+  ) {
+    Geolocation.getCurrentPosition().then((g) => {
+      this.geo =
+        '' +
+        g.coords.latitude.toFixed(2).toString() +
+        ', ' +
+        g.coords.longitude.toFixed(2).toString();
+    });
+  }
 
   ngOnInit() {
-    //Mirar si puedo usar alguna alternativa al subscribe para que no me cargue todos los mensajes anteriores al login
-    this.messageService.getMessage().subscribe((m) =>{
-      this.messages = m
-    })
-    switch(true){
-      case (this.messages.length <= 10) : this.ind = 0;
-      case (this.messages.length > 10 && this.messages.length < 20) : this.ind = 10;
-      default : this.ind = this.messages.length - 10
+    this.messageService.getMessage().subscribe((m) => {
+      this.messages = m;
+    });
+    switch (true) {
+      case this.messages.length <= 12:
+        this.ind = 0;
+      case this.messages.length > 12 && this.messages.length < 24:
+        this.ind = 12;
+      default:
+        this.ind = this.messages.length - 12;
     }
-    this.scrollToBottomSetTimeOut(1100)
-    // this.messageList = this.messages.splice(0, this.topLimit)
+    this.scrollToBottomSetTimeOut(1100);
   }
 
-  scrollToBottomSetTimeOut(time){
-
+  scrollToBottomSetTimeOut(time) {
     setTimeout(() => {
       this.content.scrollToBottom();
-      }, time); 
-    }
-
-  // Comentado porque solo se usaba en el infinite scroll
-  // loadData(event) {
-  //   setTimeout(() => {
-  //     this.slice += 5;
-  //     this.infiniteScroll.complete();
-  //     if (this.slice > this.messages.length) {
-  //       event.target.disabled = true;
-  //     }
-  //   }, 500);
-  // }
-
-  onSendMessage(){
-    this.inputMessage = this.el.nativeElement.getElementsByTagName('input')[0];
-    const text = this.inputMessage.value
-    if(text.length < 1){return null;}
-    const date = Date.now().toString()
-    try {
-      this.messageService.addMessage(
-        this.user,
-        date,
-        text,
-        this.geo
-      )
-    } catch (error) {
-        alert('Para poder enviar mensajes, por favor, permite la localización')
-    }
-
-    this.inputMessage.value = ''
-    this.scrollToBottomSetTimeOut(10)
+    }, time);
   }
 
-  onLogoff(){
-    if(confirm('¿Seguro que quieres cerrar sesión?')) this.authService.logoff().then(() => this.router.navigate(['']))
+  loadData(event) {
+    setTimeout(() => {
+      this.slice += 5;
+      this.infiniteScroll.complete();
+      if (this.slice > this.messages.length) {
+        event.target.disabled = true;
+      }
+    }, 500);
+  }
+
+  onSendMessage() {
+    this.inputMessage = this.el.nativeElement.getElementsByTagName('input')[0];
+    const text = this.inputMessage.value;
+    if (text.length < 1) {
+      return null;
+    }
+    const date = Date.now().toString();
+    try {
+      this.ind--;
+      this.messageService.addMessage(this.user, date, text, this.geo);
+    } catch (error) {
+      alert('Para poder enviar mensajes, por favor, permite la localización');
+    }
+
+    this.inputMessage.value = '';
+    this.scrollToBottomSetTimeOut(10);
+  }
+
+  onLogoff() {
+    if (confirm('¿Seguro que quieres cerrar sesión?'))
+      this.authService.logoff().then(() => this.router.navigate(['']));
   }
 }
