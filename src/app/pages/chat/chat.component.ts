@@ -55,6 +55,7 @@ export class ChatComponent implements OnInit {
     }, time);
   }
 
+  //Dejo el método aunque ya no haga nada por si decido volver a cargar los mensajes desde el principio e ir paginándolos
   loadData(event) {
     setTimeout(() => {
       this.slice += 5;
@@ -62,7 +63,7 @@ export class ChatComponent implements OnInit {
       if (this.slice > this.messages.length) {
         event.target.disabled = true;
       }
-    }, 500);
+    }, 100);
   }
 
   onGeoReady() {
@@ -98,6 +99,6 @@ export class ChatComponent implements OnInit {
 
   onLogoff() {
     if (confirm('¿Seguro que quieres cerrar sesión?'))
-      this.authService.logoff().then(() => this.router.navigate(['']));
+      this.authService.logoff().then(() => alert('Sesión cerrada con éxito')).then(() => this.router.navigate(['']));
   }
 }
