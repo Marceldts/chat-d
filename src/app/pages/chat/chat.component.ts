@@ -31,15 +31,7 @@ export class ChatComponent implements OnInit {
     private readonly router: Router,
     private el: ElementRef,
     private messageService: MessageService
-  ) {
-    Geolocation.getCurrentPosition().then((g) => {
-      this.geo =
-        '' +
-        g.coords.latitude.toFixed(2).toString() +
-        ', ' +
-        g.coords.longitude.toFixed(2).toString();
-    });
-  }
+  ) {}
 
   ngOnInit() {
     this.messageService.getMessage().subscribe((m) => {
@@ -54,6 +46,7 @@ export class ChatComponent implements OnInit {
         this.ind = this.messages.length - 12;
     }
     this.scrollToBottomSetTimeOut(1100);
+    this.onGeoReady();
   }
 
   scrollToBottomSetTimeOut(time) {
@@ -72,6 +65,16 @@ export class ChatComponent implements OnInit {
     }, 500);
   }
 
+  onGeoReady() {
+    Geolocation.getCurrentPosition().then((g) => {
+      this.geo =
+        '' +
+        g.coords.latitude.toFixed(2).toString() +
+        ', ' +
+        g.coords.longitude.toFixed(2).toString();
+    });
+  }
+
   onSendMessage() {
     this.inputMessage = this.el.nativeElement.getElementsByTagName('input')[0];
     const text = this.inputMessage.value;
@@ -83,7 +86,10 @@ export class ChatComponent implements OnInit {
       this.ind--;
       this.messageService.addMessage(this.user, date, text, this.geo);
     } catch (error) {
-      alert('Para poder enviar mensajes, por favor, permite la localización');
+      //Si quiero que la ubicación sea necesaria, puedo lanzar esta alerta en vez de añadir el msg
+      //alert('Para poder enviar mensajes, por favor, permite la localización');
+      this.geo = 'No permission to access location';
+      this.messageService.addMessage(this.user, date, text, this.geo);
     }
 
     this.inputMessage.value = '';
