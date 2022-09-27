@@ -9,12 +9,7 @@ const routes: Routes = [
     path: '',
     component: ChatComponent,
     title: 'Chat'
-  },
-  // {
-  //   path: '../',
-  //   // loadChildren: () => import('src\app\app-routing.module.ts').then( m => m.AppRoutingModule)
-  //   component: AppComponent
-  // }
+  }
 ];
 
 @NgModule({

@@ -1,60 +1,50 @@
 <ion-header>
   <ion-toolbar>
     <ion-title class="ion-text-center">Crear una cuenta</ion-title>
-  </ion-toolbar>
-</ion-header><ion-content>
+  </ion-toolbar> </ion-header
+><ion-content>
   <form [formGroup]="registerForm">
     <ion-item>
       <ion-label position="floating">Email</ion-label>
-      <ion-input required formControlName="email" type="text" (keyup.enter)="onRegister()"></ion-input>
+      <ion-input
+        required
+        formControlName="email"
+        type="text"
+        (keyup.enter)="onRegister()"
+      ></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Contraseña</ion-label>
-      <ion-input required formControlName="password" type="password" minlength="6" (keyup.enter)="onRegister()"></ion-input>
+      <ion-input
+        required
+        formControlName="password"
+        type="password"
+        minlength="6"
+        (keyup.enter)="onRegister()"
+      ></ion-input>
     </ion-item>
-    <!-- <ion-item>
-      <ion-label position="floating">Nombre de usuario</ion-label>
-      <ion-input required formControlName="displayName" type="text"></ion-input>
-    </ion-item> -->
     <div class="flex">
-      <div class="bot">    
-        <ion-button class="but1" fill="solid" [disabled]="!registerForm.valid" (click)="onRegister()">Registrarme</ion-button>
+      <div class="bot">
+        <ion-button
+          class="but1"
+          fill="solid"
+          [disabled]="!registerForm.valid"
+          (click)="onRegister()"
+          >Registrarme</ion-button
+        >
       </div>
-      <!-- <ion-item> -->
+      <ion-row>
+        <ion-label class="lab"
+          >No querías registrarte? Inicia sesión aquí</ion-label
+        >
+      </ion-row>
+      <div>
         <ion-row>
-              <ion-label class="lab">No querías registrarte? Inicia sesión aquí</ion-label>
-        </ion-row>    
-        <div>
-          <ion-row>
-            <ion-button class="but2" fill="outline" routerLink="/login">Iniciar sesión</ion-button>
-          </ion-row>
-        </div></div>
-    <!-- </ion-item> -->
+          <ion-button class="but2" fill="outline" routerLink="/login"
+            >Iniciar sesión</ion-button
+          >
+        </ion-row>
+      </div>
+    </div>
   </form>
-  <!-- <form [formGroup]="registerForm">
-    <div>
-      <div class="col">
-        <div class="row">
-          <label >Email</label>
-          <div class="row">
-            <ion-input type="email" formControlName="email"></ion-input>
-          </div>
-        </div>
-        <div class="row">
-          <label>Username</label>
-          <div class="row">
-            <ion-input type="text" formControlName="username"></ion-input>
-          </div>
-        </div>
-        <div class="row">
-          <label for="">Password</label>
-          <div class="row">
-            <ion-input type="password" formControlName="password"></ion-input>
-          </div>
-        </div>
-        <div class="row">
-          <ion-button shape="round" color="primary" fill="outline" [disabled]="!registerForm.valid" (click)="onRegister()">Register</ion-button></div>
-      </div>
-      </div>
-    </form> -->
-  </ion-content>
+</ion-content>

@@ -1,11 +1,5 @@
 <ion-header>
   <ion-toolbar>
-    <!-- 
-      Podria hacer un boton en el header para poder llegar siempre al home, sin tener que recargar la pag (para poder acceder desde la pwa)
-      <ion-row>
-        Meter el title aqui
-      <ion-button class="logout" (click)="onLogoff()">
-    </ion-row> -->
     <ion-title class="ion-text-center">Inicio de sesión</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -13,44 +7,45 @@
   <form [formGroup]="loginForm">
     <ion-item>
       <ion-label position="floating">E-Mail</ion-label>
-      <ion-input required formControlName="email" inputmode="email" (keyup.enter)="onLogin()"></ion-input>
+      <ion-input
+        required
+        formControlName="email"
+        inputmode="email"
+        (keyup.enter)="onLogin()"
+      ></ion-input>
     </ion-item>
     <ion-item>
       <ion-label position="floating">Password</ion-label>
-      <ion-input required formControlName="password" type="password" minlength="6" (keyup.enter)="onLogin()"></ion-input>
+      <ion-input
+        required
+        formControlName="password"
+        type="password"
+        minlength="6"
+        (keyup.enter)="onLogin()"
+      ></ion-input>
     </ion-item>
     <div class="flex">
       <div class="bot">
-        <ion-row >
-          <ion-button class="but1" fill="solid" (click)="onLogin()" [disabled]="!loginForm.valid">Iniciar sesión</ion-button>
+        <ion-row>
+          <ion-button
+            class="but1"
+            fill="solid"
+            (click)="onLogin()"
+            [disabled]="!loginForm.valid"
+            >Iniciar sesión</ion-button
+          >
         </ion-row>
       </div>
-        <ion-row>
-          <ion-label class="lab">No tienes cuenta? Regístrate aquí</ion-label>
-        </ion-row>
+      <ion-row>
+        <ion-label class="lab">No tienes cuenta? Regístrate aquí</ion-label>
+      </ion-row>
       <div>
         <ion-row>
-          <ion-button class="but2" fill="outline" routerLink="/register">Registrarme</ion-button>
+          <ion-button class="but2" fill="outline" routerLink="/register"
+            >Registrarme</ion-button
+          >
         </ion-row>
       </div>
     </div>
   </form>
-  <!-- <form [formGroup]="loginForm">
-      <div class="col">
-        <div class="row">
-          <label >Email</label>
-          <div class="row">
-            <ion-input type="email" formControlName="username"></ion-input>
-          </div>
-        </div>
-        <div class="row">
-          <label for="">Password</label>
-          <div class="row">
-            <ion-input type="password" formControlName="password"></ion-input>
-          </div>
-        </div>
-        <div class="row">
-          <ion-button shape="round" color="primary" fill="outline" [disabled]="!loginForm.valid" (click)="onLogin()">Login</ion-button></div>
-      </div>
-    </form> -->
-  </ion-content>
+</ion-content>
