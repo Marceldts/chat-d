@@ -18,12 +18,13 @@ export class MessageService {
     );
   }
 
-  addMessage(user: string, date: string, text: string, geo: string) {
+  addMessage(user: string, date: string, text: string, geo: string, type: string) {
     this.messageDB.push({
       user,
       date,
       text,
       geo,
+      type
     });
   }
 
@@ -49,4 +50,5 @@ export interface Message {
   date: string;
   text: string;
   geo?: string;
+  type: string
 }

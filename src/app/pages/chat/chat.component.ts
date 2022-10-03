@@ -4,6 +4,10 @@ import { IonContent, IonDatetime, IonInfiniteScroll } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { Message, MessageService } from 'src/app/services/message.service';
 import { Geolocation } from '@capacitor/geolocation';
+import { Camera, CameraResultType } from '@capacitor/camera';
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
+import { getStorage, ref, uploadString } from 'firebase/storage';
+import * as firebase from 'firebase/compat';
 
 @Component({
   selector: 'app-chat',
@@ -19,6 +23,7 @@ export class ChatComponent implements OnInit {
   inputMessage: any;
   ubi: string;
   geo: string;
+  type: string;
   numScrollTop: number;
   numCurrentY: number;
   end = false;
@@ -31,7 +36,9 @@ export class ChatComponent implements OnInit {
     private readonly router: Router,
     private el: ElementRef,
     private messageService: MessageService
-  ) {}
+  ) {
+    defineCustomElements(window);
+  }
 
   ngOnInit() {
     this.messageService.getMessage().subscribe((m) => {
@@ -83,14 +90,27 @@ export class ChatComponent implements OnInit {
       return null;
     }
     const date = Date.now().toString();
+    this.type = 'txt';
     try {
       this.ind--;
-      this.messageService.addMessage(this.user, date, text, this.geo);
+      this.messageService.addMessage(
+        this.user,
+        date,
+        text,
+        this.geo,
+        this.type
+      );
     } catch (error) {
       //Si quiero que la ubicación sea necesaria, puedo lanzar esta alerta en vez de añadir el msg
       //alert('Para poder enviar mensajes, por favor, permite la localización');
       this.geo = 'No permission to access location';
-      this.messageService.addMessage(this.user, date, text, this.geo);
+      this.messageService.addMessage(
+        this.user,
+        date,
+        text,
+        this.geo,
+        this.type
+      );
     }
 
     this.inputMessage.value = '';
@@ -99,6 +119,43 @@ export class ChatComponent implements OnInit {
 
   onLogoff() {
     if (confirm('¿Seguro que quieres cerrar sesión?'))
-      this.authService.logoff().then(() => alert('Sesión cerrada con éxito')).then(() => this.router.navigate(['']));
+      this.authService
+        .logoff()
+        .then(() => alert('Sesión cerrada con éxito'))
+        .then(() => this.router.navigate(['']));
+  }
+
+  async onTakePicture() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.DataUrl ,
+    });
+    // const storage = getStorage();
+    // const storageRef = ref(storage, 'images/' + image.path);
+    const date = Date.now().toString();
+    this.type = 'img';
+    // uploadString(storageRef, image.webPath).then((snapshot) => {
+    //   console.log('Uploaded a blob or file!');
+    // });
+    try {
+      this.ind--;
+      this.messageService.addMessage(
+        this.user,
+        date,
+        image.dataUrl,
+        this.geo,
+        this.type
+      );
+    } catch (error) {
+      this.geo = 'No permission to access location';
+      this.messageService.addMessage(
+        this.user,
+        date,
+        image.webPath,
+        this.geo,
+        this.type
+      );
+    }
   }
 }

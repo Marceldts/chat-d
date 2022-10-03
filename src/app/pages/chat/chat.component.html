@@ -23,9 +23,10 @@
           <ion-text
             ><b>{{ message.user }}:</b><br
           /></ion-text>
-          <ion-label class="ion-text-wrap">
+          <ion-label class="ion-text-wrap" *ngIf="message.type==='txt'">
             {{ message.text }}
           </ion-label>
+          <img src="{{message.text}}" *ngIf="message.type==='img'">
         </div>
       </div>
     </ion-infinite-scroll-content>
@@ -42,8 +43,11 @@
         id="inputMessage"
         (keyup.enter)="onSendMessage()"
       ></ion-input>
+      <ion-button (click)="onTakePicture()" class="camera">
+        <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
+      </ion-button>
       <ion-button (click)="onSendMessage()" class="enviar">
-        <ion-icon slot="icon-only" name="add"></ion-icon>
+        <ion-icon name="send-outline"></ion-icon>
       </ion-button>
     </ion-row>
   </ion-toolbar>
