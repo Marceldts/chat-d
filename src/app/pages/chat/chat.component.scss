@@ -27,6 +27,18 @@ ion-button.enviar {
   height: auto;
   transition: 0.3s;
 }
+ion-button.camera {
+  --background: #3689ff;
+  margin: 10px;
+  margin-left: auto;
+  border-radius: 5px;
+  height: auto;
+  transition: 0.3s;
+}
+
+img {
+  border-radius: 5px;
+}
 
 .other {
   display: flex;
@@ -68,7 +80,7 @@ ion-button.enviar {
     border-radius: 0.5rem;
   }
 }
-.hydrated{
+.hydrated {
   text-align: justify;
 }
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,500;1,800&display=swap");

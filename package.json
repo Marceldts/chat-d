@@ -25,6 +25,7 @@
     "@awesome-cordova-plugins/firebase-authentication": "^5.45.0",
     "@capacitor/android": "4.1.0",
     "@capacitor/app": "4.0.1",
+    "@capacitor/camera": "^4.1.2",
     "@capacitor/core": "4.1.0",
     "@capacitor/geolocation": "^4.0.1",
     "@capacitor/haptics": "4.0.1",
