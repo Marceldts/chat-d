@@ -19,7 +19,7 @@
         *ngFor="let message of messages | slice: ind:messages.length"
         [ngClass]="message.user === user ? 'flex' : 'other'"
       >
-        <div class="own">
+        <div class="own" (click)="onDelete(message)">
           <ion-text
             ><b>{{ message.user }}:</b><br
           /></ion-text>
