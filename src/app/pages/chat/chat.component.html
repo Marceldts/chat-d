@@ -19,14 +19,21 @@
         *ngFor="let message of messages | slice: ind:messages.length"
         [ngClass]="message.user === user ? 'flex' : 'other'"
       >
-        <div class="own" (click)="onDelete(message)">
-          <ion-text
-            ><b>{{ message.user }}:</b><br
-          /></ion-text>
-          <ion-label class="ion-text-wrap" *ngIf="message.type==='txt'">
+        <div class="own">
+          <ion-row>
+            <ion-text
+              ><b>{{ message.user }}:</b><br
+            /></ion-text>
+            <ion-icon
+              name="trash-outline"
+              (click)="onDelete(message)"
+              class="del"
+            ></ion-icon>
+          </ion-row>
+          <ion-label class="ion-text-wrap" *ngIf="message.type === 'txt'">
             {{ message.text }}
           </ion-label>
-          <img src="{{message.text}}" *ngIf="message.type==='img'">
+          <img src="{{ message.text }}" *ngIf="message.type === 'img'" />
         </div>
       </div>
     </ion-infinite-scroll-content>

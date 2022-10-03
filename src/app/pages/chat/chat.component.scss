@@ -61,6 +61,10 @@ img {
     }
   }
 }
+.del{
+  visibility: hidden;
+  
+}
 .flex {
   display: flex;
   flex-direction: column;
@@ -79,6 +83,11 @@ img {
       --background: #3689ff;
     }
     border-radius: 0.5rem;
+  }
+  .own:hover{
+    .del{
+      visibility: visible;
+    }
   }
 }
 .hydrated {
