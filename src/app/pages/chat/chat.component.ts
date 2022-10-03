@@ -117,6 +117,14 @@ export class ChatComponent implements OnInit {
     this.scrollToBottomSetTimeOut(10);
   }
 
+  onDelete(msg) {
+    if (msg.user === this.user) {
+      if (confirm('¿Seguro que quieres borrar el mensaje?')) {
+        this.messageService.deleteMessage(msg.$key);
+      }
+    }
+  }
+
   onLogoff() {
     if (confirm('¿Seguro que quieres cerrar sesión?'))
       this.authService
@@ -129,7 +137,7 @@ export class ChatComponent implements OnInit {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: true,
-      resultType: CameraResultType.DataUrl ,
+      resultType: CameraResultType.DataUrl,
     });
     // const storage = getStorage();
     // const storageRef = ref(storage, 'images/' + image.path);

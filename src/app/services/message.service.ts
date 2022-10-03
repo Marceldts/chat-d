@@ -28,6 +28,10 @@ export class MessageService {
     });
   }
 
+  deleteMessage(key){
+    this.messageDB.remove(key)
+  }
+
   getMessage(): Observable<Message[]> {
     return this.messageDB
       .snapshotChanges()
