@@ -63,7 +63,10 @@ img {
 }
 .del{
   visibility: hidden;
-  
+}
+.headMsg{
+  display: flex;
+    justify-content: space-between;
 }
 .flex {
   display: flex;

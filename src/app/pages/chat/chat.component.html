@@ -20,7 +20,7 @@
         [ngClass]="message.user === user ? 'flex' : 'other'"
       >
         <div class="own">
-          <ion-row>
+          <ion-row class="headMsg">
             <ion-text
               ><b>{{ message.user }}:</b><br
             /></ion-text>
@@ -28,6 +28,7 @@
               name="trash-outline"
               (click)="onDelete(message)"
               class="del"
+              item-right
             ></ion-icon>
           </ion-row>
           <ion-label class="ion-text-wrap" *ngIf="message.type === 'txt'">
