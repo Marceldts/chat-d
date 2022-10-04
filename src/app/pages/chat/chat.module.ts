@@ -18,6 +18,8 @@ import { ReactiveFormsModule } from '@angular/forms';
     CommonModule,
     ChatRoutingModule,
     IonicModule,
-  ]
+  ], 
+  // Intentar implementar solucion para comprobar que el sessionStorage no se ha cambiado manualmente
+  // providers: [AuthService]
 })
 export class ChatModule { }

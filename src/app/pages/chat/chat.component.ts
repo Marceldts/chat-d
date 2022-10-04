@@ -41,6 +41,11 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit() {
+
+    //Buscar manera de no permitir que se cambie el sessionStorage asi porque si
+    //Guardar datos de login en LoginComponent y comprobar si son los mismos que en sessionStorage?
+    //Diria que esta es la manera, ahorrandome tocar el auth
+
     this.messageService.getMessage().subscribe((m) => {
       this.messages = m;
     });
