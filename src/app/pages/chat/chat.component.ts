@@ -1,4 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import {
+  Component,
+  ElementRef,
+  OnDestroy,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { Router } from '@angular/router';
 import { IonContent, IonDatetime, IonInfiniteScroll } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
@@ -8,6 +14,7 @@ import { Camera, CameraResultType } from '@capacitor/camera';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import { getStorage, ref, uploadString } from 'firebase/storage';
 import * as firebase from 'firebase/compat';
+import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-chat',
@@ -30,6 +37,7 @@ export class ChatComponent implements OnInit {
   slice = 0;
   ind;
   user = JSON.parse(sessionStorage.getItem('user')!).email;
+  password = JSON.parse(sessionStorage.getItem('user')!).password;
 
   constructor(
     private readonly authService: AuthService,
@@ -41,10 +49,7 @@ export class ChatComponent implements OnInit {
   }
 
   ngOnInit() {
-
-    //Buscar manera de no permitir que se cambie el sessionStorage asi porque si
-    //Guardar datos de login en LoginComponent y comprobar si son los mismos que en sessionStorage?
-    //Diria que esta es la manera, ahorrandome tocar el auth
+    this.checkUser();
 
     this.messageService.getMessage().subscribe((m) => {
       this.messages = m;
@@ -65,6 +70,18 @@ export class ChatComponent implements OnInit {
     setTimeout(() => {
       this.content.scrollToBottom();
     }, time);
+  }
+
+  checkUser() {
+    this.authService
+      .login(this.user, this.password)
+      .then(() => console.log('Bien'))
+      .catch(() =>
+        this.authService
+          .logoff()
+          .then(() => alert('Los datos de usuario no son correctos'))
+          .then(() => this.router.navigate(['']))
+      );
   }
 
   //Dejo el método aunque ya no haga nada por si decido volver a cargar los mensajes desde el principio e ir paginándolos
@@ -144,13 +161,8 @@ export class ChatComponent implements OnInit {
       allowEditing: true,
       resultType: CameraResultType.DataUrl,
     });
-    // const storage = getStorage();
-    // const storageRef = ref(storage, 'images/' + image.path);
     const date = Date.now().toString();
     this.type = 'img';
-    // uploadString(storageRef, image.webPath).then((snapshot) => {
-    //   console.log('Uploaded a blob or file!');
-    // });
     try {
       this.ind--;
       this.messageService.addMessage(

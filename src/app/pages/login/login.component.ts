@@ -16,7 +16,7 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-
+  loginMail;
   constructor(
     private readonly fb: FormBuilder,
     private readonly authService: AuthService,

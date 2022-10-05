@@ -8,18 +8,12 @@ import { ChatComponent } from './chat.component';
 import { FirebaseServiceService } from 'src/app/services/firebase-service.service';
 import {} from '@angular/fire/database';
 import { ReactiveFormsModule } from '@angular/forms';
-
+import { LoginComponent } from '../login/login.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @NgModule({
-  declarations: [
-    ChatComponent
-  ],
-  imports: [
-    CommonModule,
-    ChatRoutingModule,
-    IonicModule,
-  ], 
-  // Intentar implementar solucion para comprobar que el sessionStorage no se ha cambiado manualmente
-  // providers: [AuthService]
+  declarations: [ChatComponent],
+  imports: [CommonModule, ChatRoutingModule, IonicModule],
+  providers: [LoginComponent, AuthService],
 })
-export class ChatModule { }
+export class ChatModule {}

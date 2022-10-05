@@ -22,9 +22,6 @@ export class AuthService {
   async login(email, password) {
     FirebaseServiceService.getFirebaseConfig();
     const auth = getAuth();
-    //Probar a actualizar la persistencia de la sesion de autorizacion a none para que, al cambiar la ventana,
-    //se pierda y se vuelva a tener que iniciar sesion
-    //setPersistence(auth, firebase.auth.Auth.Persistence.NONE)
     const user = await signInWithEmailAndPassword(auth, email, password).then(
       (userData) => {
         const { user } = userData;
@@ -34,6 +31,7 @@ export class AuthService {
             uid: user.uid,
             token: user['accessToken'],
             email: user.email,
+            password: password,
           })
         );
       }
