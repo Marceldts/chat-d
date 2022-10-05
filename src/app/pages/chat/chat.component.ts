@@ -1,7 +1,6 @@
 import {
   Component,
   ElementRef,
-  OnDestroy,
   OnInit,
   ViewChild,
 } from '@angular/core';
@@ -12,9 +11,6 @@ import { Message, MessageService } from 'src/app/services/message.service';
 import { Geolocation } from '@capacitor/geolocation';
 import { Camera, CameraResultType } from '@capacitor/camera';
 import { defineCustomElements } from '@ionic/pwa-elements/loader';
-import { getStorage, ref, uploadString } from 'firebase/storage';
-import * as firebase from 'firebase/compat';
-import { LoginComponent } from '../login/login.component';
 
 @Component({
   selector: 'app-chat',

@@ -3,10 +3,8 @@ import {
   FormBuilder,
   FormGroup,
   Validators,
-  FormControl,
 } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FirebaseError } from 'firebase/app';
 import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
@@ -16,7 +14,6 @@ import { AuthService } from 'src/app/services/auth.service';
 })
 export class LoginComponent implements OnInit {
   loginForm: FormGroup;
-  loginMail;
   constructor(
     private readonly fb: FormBuilder,
     private readonly authService: AuthService,

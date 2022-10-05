@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import {
   createUserWithEmailAndPassword,
   getAuth,
-  onAuthStateChanged,
   signInWithEmailAndPassword,
 } from 'firebase/auth';
 import { FirebaseServiceService } from './firebase-service.service';
@@ -10,7 +9,6 @@ import {
   AngularFirestore,
   AngularFirestoreDocument,
 } from '@angular/fire/compat/firestore';
-import { AngularFireAuth } from '@angular/fire/compat/auth';
 
 @Injectable({
   providedIn: 'root',
