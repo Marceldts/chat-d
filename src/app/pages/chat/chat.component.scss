@@ -90,6 +90,7 @@ img {
   .own:hover{
     .del{
       visibility: visible;
+      pointer-events: none;
     }
   }
 }

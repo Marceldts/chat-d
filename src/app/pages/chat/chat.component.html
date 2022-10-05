@@ -25,13 +25,9 @@
               ><b>{{ message.user }}:</b><br
             /></ion-text>
             <!-- Probar a poner el span con el pointer events none en el css del icon (aunque no creo que funcione) -->
-            <span title="Borrar mensaje">
-              <ion-icon
-                name="trash-outline"
-                (click)="onDelete(message)"
-                class="del"
-                item-right
-              ></ion-icon></span>
+            <span title="Borrar mensaje" (click)="onDelete(message)">
+              <ion-icon name="trash-outline" class="del" item-right></ion-icon
+            ></span>
           </ion-row>
           <ion-label class="ion-text-wrap" *ngIf="message.type === 'txt'">
             {{ message.text }}
