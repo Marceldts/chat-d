@@ -136,9 +136,11 @@ export class ChatComponent implements OnInit {
   }
 
   onDelete(msg) {
+    //Si quiero que aparezca el mensaje, he de usar el método update y no remove de la db y actualizar manualmente el texto del div
     if (msg.user === this.user) {
       if (confirm('¿Seguro que quieres borrar el mensaje?')) {
-        // this.messageService.deleteMessage(msg.$key);
+        this.messageService.deleteMessage(msg.$key);
+        // msg.text = 'Este mensaje ha sido eliminado'
       }
     }
   }

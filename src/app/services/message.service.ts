@@ -29,7 +29,10 @@ export class MessageService {
   }
 
   deleteMessage(key){
+    //Si lo que quiero es que aparezca el texto 'Este mensaje ha sido eliminado', he de usar el método de arriba
+    //Si quiero borrarlo directamente, lo que he de hacer es usar el método de abajo
     this.messageDB.remove(key)
+    // this.messageDB.update(key, {text: 'Este mensaje ha sido eliminado'})
   }
 
   getMessage(): Observable<Message[]> {
