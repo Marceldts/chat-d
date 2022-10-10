@@ -46,7 +46,6 @@ export class ChatComponent implements OnInit {
 
   ngOnInit() {
     this.checkUser();
-
     this.messageService.getMessage().subscribe((m) => {
       this.messages = m;
     });
@@ -71,7 +70,6 @@ export class ChatComponent implements OnInit {
   checkUser() {
     this.authService
       .login(this.user, this.password)
-      .then(() => console.log('Bien'))
       .catch(() =>
         this.authService
           .logoff()
