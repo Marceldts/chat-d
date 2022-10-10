@@ -9,24 +9,32 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-content" [scrollEvents]="true">
-  <ion-list>
-    <!-- Antes, el slice estaba de 0 a slice, pero lo puse de slice a messages.length para que no me carguen todos los mensajes
-        Vuelvo a ponerlo como antes porque si no hay suficientes mensajes no los carga
-    -->
-    <ion-item *ngFor="let mesage of messages | slice: ind:messages.length" class="msg">
-      <ion-row>
-        <ion-text color="tertiary"><b>{{ mesage.user }}: &nbsp;</b></ion-text>
-        <ion-text color="secondary"> {{ mesage.text }}</ion-text>
-      </ion-row>
-    </ion-item>
-  </ion-list>
-
+<ion-content class="ion-content" onload="scrollOnInit()">
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">
     <ion-infinite-scroll-content
       loadingSpinner="bubbles"
       loadingText="Cargando más mensajes..."
     >
+      <div
+        *ngFor="let message of messages | slice: ind:messages.length"
+        [ngClass]="message.user === user ? 'flex' : 'other'"
+      >
+        <div class="own">
+          <ion-row class="headMsg">
+            <ion-text
+              ><b>{{ message.user }}:</b><br
+            /></ion-text>
+            <!-- Probar a poner el span con el pointer events none en el css del icon (aunque no creo que funcione) -->
+            <span title="Borrar mensaje" (click)="onDelete(message)">
+              <ion-icon name="trash-outline" class="del" item-right></ion-icon
+            ></span>
+          </ion-row>
+          <ion-label class="ion-text-wrap" *ngIf="message.type === 'txt'">
+            {{ message.text }}
+          </ion-label>
+          <img src="{{ message.text }}" *ngIf="message.type === 'img'" />
+        </div>
+      </div>
     </ion-infinite-scroll-content>
   </ion-infinite-scroll>
 </ion-content>
@@ -41,8 +49,11 @@
         id="inputMessage"
         (keyup.enter)="onSendMessage()"
       ></ion-input>
+      <ion-button (click)="onTakePicture()" class="camera">
+        <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
+      </ion-button>
       <ion-button (click)="onSendMessage()" class="enviar">
-        <ion-icon slot="icon-only" name="add"></ion-icon>
+        <ion-icon name="send-outline"></ion-icon>
       </ion-button>
     </ion-row>
   </ion-toolbar>
