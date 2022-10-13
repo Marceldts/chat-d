@@ -61,12 +61,12 @@ img {
     }
   }
 }
-.del{
+.del {
   visibility: hidden;
 }
-.headMsg{
+.headMsg {
   display: flex;
-    justify-content: space-between;
+  justify-content: space-between;
 }
 .flex {
   display: flex;
@@ -87,10 +87,17 @@ img {
     }
     border-radius: 0.5rem;
   }
-  .own:hover{
-    .del{
+  .own:hover {
+    .del {
       visibility: visible;
       pointer-events: none;
+    }
+    .del2 {
+      transition: all 0.3s ease;
+    }
+    .del2:hover {
+      transition: all 0.3s ease;
+      transform: scale(1.2) perspective(1px);
     }
   }
 }

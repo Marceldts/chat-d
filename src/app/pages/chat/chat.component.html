@@ -25,7 +25,7 @@
               ><b>{{ message.user }}:</b><br
             /></ion-text>
             <!-- Probar a poner el span con el pointer events none en el css del icon (aunque no creo que funcione) -->
-            <span title="Borrar mensaje" (click)="onDelete(message)">
+            <span title="Borrar mensaje" class="del2" (click)="onDelete(message)">
               <ion-icon name="trash-outline" class="del" item-right></ion-icon
             ></span>
           </ion-row>
