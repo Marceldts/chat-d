@@ -30,8 +30,9 @@
           <ion-button
             class="but1"
             fill="solid"
+            id="but"
             (click)="onLogin()"
-            [disabled]="!loginForm.valid"
+            [disabled]="!loginForm.valid || triesMax"
             >Iniciar sesión</ion-button
           >
         </ion-row>
@@ -45,6 +46,9 @@
             >Registrarme</ion-button
           >
         </ion-row>
+      </div>
+      <div *ngIf="triesMax">
+        <p id="timeRem" class="timeRem"></p>
       </div>
     </div>
   </form>
