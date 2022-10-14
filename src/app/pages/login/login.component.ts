@@ -49,7 +49,6 @@ export class LoginComponent implements OnInit {
     this.tries++;
     let timeAux = 10;
     alert(e);
-    alert(this.tries);
     if (this.tries >= 6) {
       this.triesMax = true;
       setTimeout(() => {
