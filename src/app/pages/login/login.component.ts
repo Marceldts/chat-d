@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
 
   onLogin() {
     const { email, password } = this.loginForm.value;
-    if (this.tries < 6) {
+    if (this.tries < 6 && this.loginForm.valid === true) {
       this.authService
         .login(email, password)
         .then(() => this.router.navigate(['/chat']))
