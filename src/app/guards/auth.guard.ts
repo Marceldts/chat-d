@@ -6,8 +6,6 @@ import { AuthService } from 'src/app/services/auth.service';
   providedIn: 'root',
 })
 export class AuthGuard implements CanActivate {
-  user = JSON.parse(sessionStorage.getItem('user')!).email;
-  password = JSON.parse(sessionStorage.getItem('user')!).password;
 
   constructor(
     private readonly router: Router,
@@ -27,7 +25,9 @@ export class AuthGuard implements CanActivate {
   //Este método está para comprobar que se ha manipulado el sessionStorage una vez hemos iniciado la sesión, ya que
   //intenta iniciar sesión con el usuario y contraseña guardados ahí y, si no puede, cierra la sesión y nos manda a inicio
   checkUser() {
-    this.authService.login(this.user, this.password).catch(() =>
+    let user = JSON.parse(sessionStorage.getItem('user')!).email;
+    let password = JSON.parse(sessionStorage.getItem('user')!).password;
+    this.authService.login(user, password).catch(() =>
       this.authService
         .logoff()
         .then(() => alert('Los datos de usuario no son correctos'))
