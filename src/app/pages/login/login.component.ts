@@ -22,6 +22,11 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
+    this.checkForm();
+  }
+
+  //Añadimos los validadores al form (el último del mail significa que ha de tener algo antes y después del @ y ha de acabar en . y 2-4 carácteres)
+  checkForm() {
     this.loginForm = this.fb.group({
       email: [
         '',
@@ -35,6 +40,7 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  //Para poder iniciar sesión, los campos del form han de ser válidos y no se ha tenido que superar el máximo de intentos
   onLogin() {
     const { email, password } = this.loginForm.value;
     if (this.tries < 6 && this.loginForm.valid === true) {
@@ -45,6 +51,10 @@ export class LoginComponent implements OnInit {
     }
   }
 
+  //Cuando ocurre un error al intentar iniciar sesión (usuario no registrado/contraseña incorrecta),
+  //aumentamos el número de intentos y comprobamos que este número sea menor que el max (en este caso 6)
+  //Si no es menor que 6, hacemos un timeout de 10 segundos en los que no se puede iniciar sesión,
+  //y mostramos por pantalla el tiempo que queda para poder iniciar sesión
   loginError(e) {
     this.tries++;
     let timeAux = 10;

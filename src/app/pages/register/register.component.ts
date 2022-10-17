@@ -18,6 +18,11 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.checkForm();
+  }
+
+  //Añadimos los validadores al form (el último del mail significa que ha de tener algo antes y después del @ y ha de acabar en . y 2-4 carácteres)
+  checkForm() {
     this.registerForm = this.fb.group({
       email: [
         '',
@@ -27,12 +32,12 @@ export class RegisterComponent implements OnInit {
           Validators.pattern('^[a-z0-9._%+-]+@[a-z0-9.-]+\\.[a-z]{2,4}$'),
         ],
       ],
-      password: ['', [Validators.required, Validators.minLength(6)]],
+      password: ['', Validators.required],
     });
   }
 
   onRegister() {
-    const { email, password, displayName } = this.registerForm.value;
+    const { email, password } = this.registerForm.value;
     this.authService
       .register(email, password)
       .then(() =>

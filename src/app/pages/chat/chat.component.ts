@@ -1,9 +1,4 @@
-import {
-  Component,
-  ElementRef,
-  OnInit,
-  ViewChild,
-} from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { IonContent, IonDatetime, IonInfiniteScroll } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
@@ -27,8 +22,6 @@ export class ChatComponent implements OnInit {
   ubi: string;
   geo: string;
   type: string;
-  numScrollTop: number;
-  numCurrentY: number;
   end = false;
   slice = 0;
   ind;
@@ -40,12 +33,11 @@ export class ChatComponent implements OnInit {
     private readonly router: Router,
     private el: ElementRef,
     private messageService: MessageService
-  ) {
-    defineCustomElements(window);
-  }
+  ) {}
 
+  //Al entrar en el componente, nos suscribimos al servicio de mensajes para poder mostrarlos y, dependiendo
+  //de la cantidad de mensajes que haya, se enseñarán todos o los 12 últimos
   ngOnInit() {
-    this.checkUser();
     this.messageService.getMessage().subscribe((m) => {
       this.messages = m;
     });
@@ -65,17 +57,6 @@ export class ChatComponent implements OnInit {
     setTimeout(() => {
       this.content.scrollToBottom();
     }, time);
-  }
-
-  checkUser() {
-    this.authService
-      .login(this.user, this.password)
-      .catch(() =>
-        this.authService
-          .logoff()
-          .then(() => alert('Los datos de usuario no son correctos'))
-          .then(() => this.router.navigate(['']))
-      );
   }
 
   //Dejo el método aunque ya no haga nada por si decido volver a cargar los mensajes desde el principio e ir paginándolos
@@ -99,6 +80,9 @@ export class ChatComponent implements OnInit {
     });
   }
 
+  //Para enviar un mensaje, tenemos que guardar el texto del input en una variable
+  //Una vez tengamos el texto, guardamos la fecha y el tipo y añadimos el mensaje al servicio de mensajes
+  //Al acabar, borramos el texto del input y scrolleamos al final
   onSendMessage() {
     this.inputMessage = this.el.nativeElement.getElementsByTagName('input')[0];
     const text = this.inputMessage.value;
@@ -108,7 +92,6 @@ export class ChatComponent implements OnInit {
     const date = Date.now().toString();
     this.type = 'txt';
     try {
-      this.ind--;
       this.messageService.addMessage(
         this.user,
         date,
@@ -151,16 +134,18 @@ export class ChatComponent implements OnInit {
         .then(() => this.router.navigate(['']));
   }
 
+  //Al lanzar el método, hacemos que el plugin de la cámara haga una foto con los parámetros que le damos
+  //Una vez tengamos la foto hecha, mandaremos el mensaje cambiando el texto por la url de la imágen y haciendo que el mensaje sea de tipo img
   async onTakePicture() {
     const image = await Camera.getPhoto({
       quality: 90,
       allowEditing: true,
+      saveToGallery: true,
       resultType: CameraResultType.DataUrl,
     });
     const date = Date.now().toString();
     this.type = 'img';
     try {
-      this.ind--;
       this.messageService.addMessage(
         this.user,
         date,

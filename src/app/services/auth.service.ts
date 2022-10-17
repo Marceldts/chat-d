@@ -17,6 +17,8 @@ export class AuthService {
   constructor(public afs: AngularFirestore) {}
   userData?: User;
 
+  //Para iniciar sesión, usamos el método signInWithEmailAndPassword que nos da el FirebaseAuth
+  //Una vez iniciada, guardamos en el sessionStorage un objeto 'user', con los campos uid, token, email y password
   async login(email, password) {
     FirebaseServiceService.getFirebaseConfig();
     const auth = getAuth();
@@ -37,6 +39,7 @@ export class AuthService {
     return user;
   }
 
+  //Al registrarnos, lo hacemos con el método 'createUserWithEmailAndPassword' de FirebaseAuth, y guardamos el usedata del usuario que hemos creado
   async register(email, password, displayName?) {
     FirebaseServiceService.getFirebaseConfig();
     const auth = getAuth();
@@ -47,6 +50,7 @@ export class AuthService {
     ).then((result) => this.setUserData(result.user));
   }
 
+  //Al cerrar sesión, borramos también el user del sessionStorage
   async logoff() {
     FirebaseServiceService.getFirebaseConfig();
     const auth = getAuth();
