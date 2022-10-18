@@ -50,7 +50,7 @@ img {
   box-shadow: 0px 0px 5px rgba(0, 0, 0, 0.3);
   color: #3689ff;
   width: fit-content;
-  max-width: 22rem;
+  max-width: 85%;
   transition: 0.3s;
   border-radius: 0.5rem;
   ion-item {
@@ -81,7 +81,7 @@ img {
     color: white;
     width: fit-content;
     transition: 0.3s;
-    max-width: 22rem;
+    max-width: 85%;
     ion-item {
       --background: #3689ff;
     }
@@ -104,4 +104,9 @@ img {
 .hydrated {
   text-align: justify;
 }
+
+.img{
+  max-height: 24rem
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,500;1,800&display=swap");
