@@ -1,37 +1,34 @@
 <ion-menu contentId="main-content" class="menu">
   <ion-header>
-    <ion-toolbar>
+    <ion-toolbar color="light">
       <ion-row>
         <ion-title class="ion-text-center">Menu</ion-title>
-        <ion-button class="logoutBut" fill="clear" (click)="onChangeTheme()" title="Cerrar sesión">
-          <ion-icon name="invert-mode-outline"></ion-icon>
-        </ion-button>
       </ion-row>
     </ion-toolbar>
   </ion-header>
   <ion-content class="ion-padding">
-    <ion-menu-toggle>
-      <ion-button fill="clear">Click to close the menu</ion-button>
-    </ion-menu-toggle>
+    <ion-list>
+      <ion-item title="Tema">
+        <ion-label>Tema nocturno</ion-label>
+        <ion-button class="logoutBut" fill="clear" (click)="onChangeTheme()" title="Cerrar sesión">
+          <ion-toggle id="themeToggle" slot="end"></ion-toggle>
+        </ion-button>
+    </ion-item>
+    <ion-item>
+      <ion-menu-toggle>
+        <ion-button fill="clear">Click to close the menu</ion-button>
+      </ion-menu-toggle>
+    </ion-item>
+    </ion-list>
+    
   </ion-content>
 </ion-menu>
 
 <div class="ion-page" id="main-content">
-  <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>Menu</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content class="ion-padding">
-    Tap the button in the toolbar to open the menu.
-  </ion-content>
 </div>
 
 <ion-header [translucent]="true">
-  <ion-toolbar>
+  <ion-toolbar color="light">
     <ion-row>
       <ion-menu-toggle class="menuBut">
         <ion-button fill="clear"
@@ -97,7 +94,7 @@
       <ion-button fill="clear" (click)="onTakePicture()" class="camera">
         <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
       </ion-button>
-      <ion-button fill="clear" (click)="onSendMessage()" class="enviar">
+      <ion-button fill="clear"(click)="onSendMessage()" class="enviar">
         <ion-icon name="send-outline"></ion-icon>
       </ion-button>
     </ion-row>

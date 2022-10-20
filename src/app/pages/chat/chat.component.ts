@@ -38,6 +38,15 @@ export class ChatComponent implements OnInit {
   //Al entrar en el componente, nos suscribimos al servicio de mensajes para poder mostrarlos y, dependiendo
   //de la cantidad de mensajes que haya, se enseñarán todos o los 12 últimos
   ngOnInit() {
+
+    const toggle = document.querySelector('#themeToggle');
+
+    // Listen for the toggle check/uncheck to toggle the dark class on the <body>
+    toggle.addEventListener('ionChange', (ev) => {
+      document.body.classList.toggle('dark', (<any>ev).detail.checked);
+    });
+    
+
     this.messageService.getMessage().subscribe((m) => {
       this.messages = m;
     });
@@ -165,16 +174,15 @@ export class ChatComponent implements OnInit {
     }
   }
 
-  onChangeTheme() {
-    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    var darkTheme = prefersDark.matches
-    if (prefersDark.matches) {
-      document.body.classList.toggle('dark');
-      darkTheme = !darkTheme
-    }
-    else{
-      document.body.classList.toggle('light');
-      darkTheme = !darkTheme
-    }
+  toggle = document.querySelector('#themeToggle');
+  tog(){
+    this.toggle.addEventListener('ionChange', (ev) => {
+      document.body.classList.toggle('dark', (<any>ev).detail.checked);
+      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    });
+  }
+
+
+  onChangeTheme(){
   }
 }
