@@ -5,7 +5,6 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Message, MessageService } from 'src/app/services/message.service';
 import { Geolocation } from '@capacitor/geolocation';
 import { Camera, CameraResultType } from '@capacitor/camera';
-import { defineCustomElements } from '@ionic/pwa-elements/loader';
 
 @Component({
   selector: 'app-chat',
@@ -27,6 +26,7 @@ export class ChatComponent implements OnInit {
   ind;
   user = JSON.parse(sessionStorage.getItem('user')!).email;
   password = JSON.parse(sessionStorage.getItem('user')!).password;
+  darkTheme = false;
 
   constructor(
     private readonly authService: AuthService,
@@ -162,6 +162,19 @@ export class ChatComponent implements OnInit {
         this.geo,
         this.type
       );
+    }
+  }
+
+  onChangeTheme() {
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+    var darkTheme = prefersDark.matches
+    if (prefersDark.matches) {
+      document.body.classList.toggle('dark');
+      darkTheme = !darkTheme
+    }
+    else{
+      document.body.classList.toggle('light');
+      darkTheme = !darkTheme
     }
   }
 }

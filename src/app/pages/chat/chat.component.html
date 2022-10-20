@@ -1,8 +1,45 @@
+<ion-menu contentId="main-content" class="menu">
+  <ion-header>
+    <ion-toolbar>
+      <ion-row>
+        <ion-title class="ion-text-center">Menu</ion-title>
+        <ion-button class="logoutBut" fill="clear" (click)="onChangeTheme()" title="Cerrar sesión">
+          <ion-icon name="invert-mode-outline"></ion-icon>
+        </ion-button>
+      </ion-row>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-menu-toggle>
+      <ion-button fill="clear">Click to close the menu</ion-button>
+    </ion-menu-toggle>
+  </ion-content>
+</ion-menu>
+
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Menu</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    Tap the button in the toolbar to open the menu.
+  </ion-content>
+</div>
+
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-row>
+      <ion-menu-toggle class="menuBut">
+        <ion-button fill="clear"
+          ><ion-icon name="menu-outline" title="Menu"></ion-icon
+        ></ion-button>
+      </ion-menu-toggle>
       <ion-title class="ion-text-center">Chat</ion-title>
-      <ion-button class="logout" (click)="onLogoff()">
+      <ion-button class="logoutBut" fill="clear" (click)="onLogoff()" title="Cerrar sesión">
         <ion-icon name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-row>
@@ -25,14 +62,22 @@
               ><b>{{ message.user }}:</b><br
             /></ion-text>
             <!-- Probar a poner el span con el pointer events none en el css del icon (aunque no creo que funcione) -->
-            <span title="Borrar mensaje" class="del2" (click)="onDelete(message)">
+            <span
+              title="Borrar mensaje"
+              class="del2"
+              (click)="onDelete(message)"
+            >
               <ion-icon name="trash-outline" class="del" item-right></ion-icon
             ></span>
           </ion-row>
           <ion-label class="ion-text-wrap" *ngIf="message.type === 'txt'">
             {{ message.text }}
           </ion-label>
-          <img src="{{ message.text }}" *ngIf="message.type === 'img'" class="img" />
+          <img
+            src="{{ message.text }}"
+            *ngIf="message.type === 'img'"
+            class="img"
+          />
         </div>
       </div>
     </ion-infinite-scroll-content>
@@ -49,10 +94,10 @@
         id="inputMessage"
         (keyup.enter)="onSendMessage()"
       ></ion-input>
-      <ion-button (click)="onTakePicture()" class="camera">
+      <ion-button fill="clear" (click)="onTakePicture()" class="camera">
         <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
       </ion-button>
-      <ion-button (click)="onSendMessage()" class="enviar">
+      <ion-button fill="clear" (click)="onSendMessage()" class="enviar">
         <ion-icon name="send-outline"></ion-icon>
       </ion-button>
     </ion-row>
