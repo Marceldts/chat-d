@@ -9,10 +9,8 @@
   <ion-content class="ion-padding">
     <ion-list>
       <ion-item title="Tema">
-        <ion-label>Tema nocturno</ion-label>
-        <ion-button class="logoutBut" fill="clear" (click)="onChangeTheme()" title="Cerrar sesión">
-          <ion-toggle id="themeToggle" slot="end"></ion-toggle>
-        </ion-button>
+        <ion-text color="primary">Tema nocturno</ion-text>
+          <ion-toggle id="themeToggle" (click)="onChangeTheme()" [checked]="darkTheme" slot="end"></ion-toggle>
     </ion-item>
     <ion-item>
       <ion-menu-toggle>

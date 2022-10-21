@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent, IonDatetime, IonInfiniteScroll } from '@ionic/angular';
+import { IonContent, IonDatetime, IonInfiniteScroll, IonToggle } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { Message, MessageService } from 'src/app/services/message.service';
 import { Geolocation } from '@capacitor/geolocation';
@@ -26,7 +26,7 @@ export class ChatComponent implements OnInit {
   ind;
   user = JSON.parse(sessionStorage.getItem('user')!).email;
   password = JSON.parse(sessionStorage.getItem('user')!).password;
-  darkTheme = false;
+  darkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
 
   constructor(
     private readonly authService: AuthService,
@@ -38,15 +38,28 @@ export class ChatComponent implements OnInit {
   //Al entrar en el componente, nos suscribimos al servicio de mensajes para poder mostrarlos y, dependiendo
   //de la cantidad de mensajes que haya, se enseñarán todos o los 12 últimos
   ngOnInit() {
+    this.subscribeMessages();
+    this.themeToggle();
 
+    this.scrollToBottomSetTimeOut(1100);
+    this.onGeoReady();
+  }
+
+  themeToggle() {
     const toggle = document.querySelector('#themeToggle');
+
+    if(this.darkTheme) document.body.classList.add('dark')
 
     // Listen for the toggle check/uncheck to toggle the dark class on the <body>
     toggle.addEventListener('ionChange', (ev) => {
       document.body.classList.toggle('dark', (<any>ev).detail.checked);
     });
-    
+    toggle.addEventListener('ionChange', (ev) => {
+      document.body.classList.toggle('light', !(<any>ev).detail.checked);
+    });
+  }
 
+  subscribeMessages() {
     this.messageService.getMessage().subscribe((m) => {
       this.messages = m;
     });
@@ -58,8 +71,6 @@ export class ChatComponent implements OnInit {
       default:
         this.ind = this.messages.length - 12;
     }
-    this.scrollToBottomSetTimeOut(1100);
-    this.onGeoReady();
   }
 
   scrollToBottomSetTimeOut(time) {
@@ -175,14 +186,12 @@ export class ChatComponent implements OnInit {
   }
 
   toggle = document.querySelector('#themeToggle');
-  tog(){
+  tog() {
     this.toggle.addEventListener('ionChange', (ev) => {
       document.body.classList.toggle('dark', (<any>ev).detail.checked);
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
     });
   }
 
-
-  onChangeTheme(){
-  }
+  onChangeTheme() {}
 }
