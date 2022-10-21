@@ -1,6 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent, IonDatetime, IonInfiniteScroll, IonToggle } from '@ionic/angular';
+import { IonContent, IonInfiniteScroll } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { Message, MessageService } from 'src/app/services/message.service';
 import { Geolocation } from '@capacitor/geolocation';
@@ -26,7 +26,7 @@ export class ChatComponent implements OnInit {
   ind;
   user = JSON.parse(sessionStorage.getItem('user')!).email;
   password = JSON.parse(sessionStorage.getItem('user')!).password;
-  darkTheme = window.matchMedia('(prefers-color-scheme: dark)').matches;
+  darkTheme = localStorage.getItem('darkTheme');
 
   constructor(
     private readonly authService: AuthService,
@@ -48,14 +48,25 @@ export class ChatComponent implements OnInit {
   themeToggle() {
     const toggle = document.querySelector('#themeToggle');
 
-    if(this.darkTheme) document.body.classList.add('dark')
+    if (this.darkTheme === 'true') {
+      document.body.classList.remove('light');
+      document.body.classList.add('dark');
+    } else {
+      document.body.classList.remove('dark');
+      document.body.classList.add('light');
+    }
 
     // Listen for the toggle check/uncheck to toggle the dark class on the <body>
     toggle.addEventListener('ionChange', (ev) => {
       document.body.classList.toggle('dark', (<any>ev).detail.checked);
-    });
-    toggle.addEventListener('ionChange', (ev) => {
       document.body.classList.toggle('light', !(<any>ev).detail.checked);
+      if (this.darkTheme === 'true') {
+        localStorage.setItem('darkTheme', 'false');
+      }
+      if (this.darkTheme === 'false') {
+        localStorage.setItem('darkTheme', 'true');
+      }
+      this.darkTheme = localStorage.getItem('darkTheme');
     });
   }
 
@@ -184,14 +195,4 @@ export class ChatComponent implements OnInit {
       );
     }
   }
-
-  toggle = document.querySelector('#themeToggle');
-  tog() {
-    this.toggle.addEventListener('ionChange', (ev) => {
-      document.body.classList.toggle('dark', (<any>ev).detail.checked);
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
-    });
-  }
-
-  onChangeTheme() {}
 }
