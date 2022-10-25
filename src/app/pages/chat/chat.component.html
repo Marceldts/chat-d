@@ -8,17 +8,56 @@
   </ion-header>
   <ion-content class="ion-padding">
     <ion-list>
-      <ion-item title="Tema">
+      <ion-item title="Modo">
         <ion-text color="primary">Modo oscuro</ion-text>
-          <ion-toggle id="themeToggle" [checked]="darkTheme" slot="end"></ion-toggle>
-    </ion-item>
+        <ion-toggle
+          id="themeToggle"
+          [checked]="darkTheme"
+          slot="end"
+        ></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-button id="open-modal"> Configuración </ion-button>
+      </ion-item>
     </ion-list>
-    
   </ion-content>
 </ion-menu>
 
-<div class="ion-page" id="main-content">
-</div>
+<ion-modal trigger="open-modal">
+  <ng-template>
+    <ion-header>
+      <ion-toolbar>
+        <ion-buttons slot="start">
+          <ion-button>Cancel</ion-button>
+        </ion-buttons>
+        <ion-title class="ion-text-center">Welcome</ion-title>
+        <ion-buttons slot="end">
+          <ion-button [strong]="true">Confirm</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+    <ion-content class="ion-padding">
+      <ion-item title="Modo">
+        <ion-text color="primary">Modo oscuro</ion-text>
+        <ion-toggle
+          id="themeToggle"
+          [checked]="darkTheme"
+          slot="end"
+        ></ion-toggle>
+      </ion-item>
+      <ion-item>
+        <ion-label>Tamaño de la fuente: </ion-label>
+        <ion-select interface="popover" placeholder={{fontSize}} (ionChange)="onSelectFontSize($event)">
+          <ion-select-option value="Pequeña">Pequeña</ion-select-option>
+          <ion-select-option value="Normal">Normal</ion-select-option>
+          <ion-select-option value="Grande">Grande</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-content>
+  </ng-template>
+</ion-modal>
+
+<div class="ion-page" id="main-content"></div>
 
 <ion-header [translucent]="true">
   <ion-toolbar color="light">
@@ -29,7 +68,12 @@
         ></ion-button>
       </ion-menu-toggle>
       <ion-title class="ion-text-center">Chat</ion-title>
-      <ion-button class="logoutBut" fill="clear" (click)="onLogoff()" title="Cerrar sesión">
+      <ion-button
+        class="logoutBut"
+        fill="clear"
+        (click)="onLogoff()"
+        title="Cerrar sesión"
+      >
         <ion-icon name="log-out-outline"></ion-icon>
       </ion-button>
     </ion-row>
@@ -87,7 +131,7 @@
       <ion-button fill="clear" (click)="onTakePicture()" class="camera">
         <ion-icon slot="icon-only" name="camera-outline"></ion-icon>
       </ion-button>
-      <ion-button fill="clear"(click)="onSendMessage()" class="enviar">
+      <ion-button fill="clear" (click)="onSendMessage()" class="enviar">
         <ion-icon name="send-outline"></ion-icon>
       </ion-button>
     </ion-row>

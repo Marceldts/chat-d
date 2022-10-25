@@ -27,6 +27,7 @@ export class ChatComponent implements OnInit {
   user = JSON.parse(sessionStorage.getItem('user')!).email;
   password = JSON.parse(sessionStorage.getItem('user')!).password;
   darkTheme = localStorage.getItem('darkTheme');
+  fontSize = localStorage.getItem('fontSize');
 
   constructor(
     private readonly authService: AuthService,
@@ -39,7 +40,9 @@ export class ChatComponent implements OnInit {
   //de la cantidad de mensajes que haya, se enseñarán todos o los 12 últimos
   ngOnInit() {
     this.subscribeMessages();
+
     this.themeToggle();
+    this.setFontSize();
 
     this.scrollToBottomSetTimeOut(1100);
     this.onGeoReady();
@@ -68,6 +71,25 @@ export class ChatComponent implements OnInit {
       }
       this.darkTheme = localStorage.getItem('darkTheme');
     });
+  }
+
+  setFontSize() {
+    if (this.fontSize == null || this.fontSize == 'Normal') {
+      localStorage.setItem('fontSize', 'Normal');
+      document.body.classList.add('normal');
+      document.body.classList.remove('peque');
+      document.body.classList.remove('grande');
+    } else if (this.fontSize == 'Pequeña') {
+      document.body.classList.remove('normal');
+      document.body.classList.add('peque');
+      document.body.classList.remove('grande');
+    } else {
+      document.body.classList.remove('normal');
+      document.body.classList.remove('peque');
+      document.body.classList.add('grande');
+    }
+
+    this.fontSize = localStorage.getItem('fontSize');
   }
 
   subscribeMessages() {
@@ -194,5 +216,11 @@ export class ChatComponent implements OnInit {
         this.type
       );
     }
+  }
+
+  onSelectFontSize(ev) {
+    this.fontSize = ev.target.value;
+    localStorage.setItem('fontSize', this.fontSize);
+    this.setFontSize()
   }
 }

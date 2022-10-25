@@ -4,8 +4,6 @@ import { CommonModule } from '@angular/common';
 import { ChatRoutingModule } from './chat-routing.module';
 import { IonicModule } from '@ionic/angular';
 import { ChatComponent } from './chat.component';
-import {} from '@angular/fire/database';
-import { LoginComponent } from '../login/login.component';
 import { AuthService } from 'src/app/services/auth.service';
 
 @NgModule({
