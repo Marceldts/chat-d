@@ -21,7 +21,8 @@
 
 ion-input {
   background-color: rgba(0, 0, 0, 0.2);
-  margin: 10px;
+  // margin: 10px;
+  margin: 10px 0 10px 10px;
   border-radius: 5px;
   color: white;
 }
@@ -31,16 +32,16 @@ ion-button {
 }
 ion-button.enviar {
   // --background: #3689ff;
-  margin: 10px;
-  margin-left: auto;
+  // margin: 10px;
+  // margin-left: auto;
   border-radius: 5px;
   height: auto;
   transition: 0.3s;
 }
 ion-button.camera {
   // --background: #3689ff;
-  margin: 10px;
-  margin-left: auto;
+  // margin: 10px;
+  // margin-left: auto;
   border-radius: 5px;
   height: auto;
   transition: 0.3s;
