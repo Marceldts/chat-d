@@ -1,6 +1,11 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
-import { IonContent, IonInfiniteScroll } from '@ionic/angular';
+import {
+  IonContent,
+  IonInfiniteScroll,
+  IonModal,
+  IonToggle,
+} from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { Message, MessageService } from 'src/app/services/message.service';
 import { Geolocation } from '@capacitor/geolocation';
@@ -15,6 +20,8 @@ export class ChatComponent implements OnInit {
   @ViewChild(IonContent, { static: true }) content: IonContent;
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild('messagesContent', { static: true }) messagesContent: ElementRef;
+  @ViewChild(IonModal) modal: IonModal;
+  @ViewChild(IonToggle) tog: IonToggle;
 
   messages: Array<Message> = [];
   inputMessage: any;
@@ -50,6 +57,8 @@ export class ChatComponent implements OnInit {
 
   themeToggle() {
     const toggle = document.querySelector('#themeToggle');
+    this.darkTheme = localStorage.getItem('darkTheme');
+    this.fontSize = localStorage.getItem('fontSize');
 
     if (this.darkTheme === 'true') {
       document.body.classList.remove('light');
@@ -221,6 +230,25 @@ export class ChatComponent implements OnInit {
   onSelectFontSize(ev) {
     this.fontSize = ev.target.value;
     localStorage.setItem('fontSize', this.fontSize);
-    this.setFontSize()
+    this.setFontSize();
+  }
+
+  onSetDefaultValues() {
+    localStorage.setItem('darkTheme', 'false');
+    localStorage.setItem('fontSize', 'Normal');
+
+    this.tog.checked = false;
+
+    document.body.classList.remove('dark');
+    document.body.classList.add('light');
+    document.body.classList.add('normal');
+    document.body.classList.remove('peque');
+    document.body.classList.remove('grande');
+
+    this.modal.dismiss();
+  }
+
+  onCloseModal() {
+    this.modal.dismiss();
   }
 }

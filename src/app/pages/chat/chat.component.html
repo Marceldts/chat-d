@@ -1,5 +1,6 @@
+
 <ion-menu contentId="main-content" class="menu">
-  <ion-header>
+  <ion-header [translucent]="true">
     <ion-toolbar color="light">
       <ion-row>
         <ion-title class="ion-text-center">Menu</ion-title>
@@ -8,16 +9,30 @@
   </ion-header>
   <ion-content class="ion-padding">
     <ion-list>
-      <ion-item title="Modo">
+      <ion-item>
         <ion-text color="primary">Modo oscuro</ion-text>
+        <ion-icon
+          name="moon-outline"
+          class="darkIcon"
+          slot="end"
+          *ngIf="darkTheme == 'true'"
+        ></ion-icon>
+        <ion-icon
+          name="sunny-outline"
+          class="darkIcon"
+          slot="end"
+          *ngIf="darkTheme == 'false'"
+        ></ion-icon>
         <ion-toggle
+          #themeToggle
           id="themeToggle"
           [checked]="darkTheme"
           slot="end"
         ></ion-toggle>
       </ion-item>
-      <ion-item>
-        <ion-button id="open-modal"> Configuración </ion-button>
+      <ion-item id="open-modal">
+        <ion-text color="primary">Configuración</ion-text
+        ><ion-icon name="settings-outline" slot="end"></ion-icon>
       </ion-item>
     </ion-list>
   </ion-content>
@@ -25,40 +40,67 @@
 
 <ion-modal trigger="open-modal">
   <ng-template>
-    <ion-header>
-      <ion-toolbar>
-        <ion-buttons slot="start">
-          <ion-button>Cancel</ion-button>
-        </ion-buttons>
-        <ion-title class="ion-text-center">Welcome</ion-title>
-        <ion-buttons slot="end">
-          <ion-button [strong]="true">Confirm</ion-button>
-        </ion-buttons>
+    <ion-header [translucent]="true">
+      <ion-toolbar color="light">
+        <ion-row>
+          <ion-title class="ion-text-center">Configuración</ion-title>
+        </ion-row>
       </ion-toolbar>
     </ion-header>
     <ion-content class="ion-padding">
-      <ion-item title="Modo">
-        <ion-text color="primary">Modo oscuro</ion-text>
-        <ion-toggle
-          id="themeToggle"
-          [checked]="darkTheme"
-          slot="end"
-        ></ion-toggle>
-      </ion-item>
-      <ion-item>
-        <ion-label>Tamaño de la fuente: </ion-label>
-        <ion-select interface="popover" placeholder={{fontSize}} (ionChange)="onSelectFontSize($event)">
-          <ion-select-option value="Pequeña">Pequeña</ion-select-option>
-          <ion-select-option value="Normal">Normal</ion-select-option>
-          <ion-select-option value="Grande">Grande</ion-select-option>
-        </ion-select>
-      </ion-item>
+      <ion-list>
+        <ion-item>
+          <ion-text color="primary">Modo oscuro</ion-text>
+          <ion-icon
+            name="moon-outline"
+            class="darkIcon"
+            slot="end"
+            *ngIf="darkTheme == 'true'"
+          ></ion-icon>
+          <ion-icon
+            name="sunny-outline"
+            class="darkIcon"
+            slot="end"
+            *ngIf="darkTheme == 'false'"
+          ></ion-icon>
+          <ion-toggle
+            #themeToggle
+            id="themeToggle"
+            [checked]="darkTheme"
+            slot="end"
+          ></ion-toggle>
+        </ion-item>
+        <ion-item>
+          <ion-text color="primary">Tamaño de la fuente: </ion-text>
+          <ion-select
+            interface="popover"
+            placeholder="{{ fontSize }}"
+            (ionChange)="onSelectFontSize($event)"
+          >
+            <ion-select-option value="Pequeña">Pequeña</ion-select-option>
+            <ion-select-option value="Normal">Normal</ion-select-option>
+            <ion-select-option value="Grande">Grande</ion-select-option>
+          </ion-select>
+        </ion-item>
+      </ion-list>
+
+      <ion-footer>
+        <ion-toolbar>
+          <div class="modalToolbar">
+            <ion-buttons slot="start">
+              <ion-button (click)="onCloseModal()">Cerrar</ion-button>
+            </ion-buttons>
+            <ion-buttons slot="end">
+              <ion-button (click)="onSetDefaultValues()">Cargar valores por defecto</ion-button>
+            </ion-buttons>
+          </div>
+        </ion-toolbar>
+      </ion-footer>
     </ion-content>
   </ng-template>
 </ion-modal>
 
 <div class="ion-page" id="main-content"></div>
-
 <ion-header [translucent]="true">
   <ion-toolbar color="light">
     <ion-row>

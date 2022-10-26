@@ -33,18 +33,16 @@ export class RegisterComponent implements OnInit {
         ],
       ],
       password: ['', Validators.required],
+      username: ['', Validators.required],
     });
   }
 
   onRegister() {
-    const { email, password } = this.registerForm.value;
+    const { email, password, username } = this.registerForm.value;
     this.authService
-      .register(email, password)
-      .then(() =>
-        this.authService
-          .login(email, password)
-          .then(() => this.router.navigate(['/chat']))
-      )
+      .register(email, password, username)
+      .then(() => this.authService.login(email, password))
+      .then(() => this.router.navigate(['/chat']))
       .catch((e) => alert(e));
   }
 }

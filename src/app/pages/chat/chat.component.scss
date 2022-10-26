@@ -52,6 +52,14 @@ img {
   border-radius: 5px;
 }
 
+ion-modal{
+  --border-radius: 1%
+}
+
+.darkIcon{
+  pointer-events: none;
+}
+
 .other {
   display: flex;
   flex-direction: column;
@@ -101,7 +109,7 @@ img {
   .own:hover {
     .del {
       visibility: visible;
-      pointer-events: none;
+      // pointer-events: none;
     }
     .del2 {
       transition: all 0.3s ease;
@@ -122,5 +130,12 @@ img {
 
 ion-icon {
   color: #3689ff
+}
+
+.modalToolbar{
+  display: flex;
+  flex-direction: column-reverse;
+  flex-wrap: nowrap;
+  align-items: center;
 }
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,500;1,800&display=swap");

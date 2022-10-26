@@ -3,6 +3,7 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
+  updateProfile,
 } from 'firebase/auth';
 import { FirebaseServiceService } from './firebase-service.service';
 import {
@@ -47,7 +48,7 @@ export class AuthService {
       auth,
       email,
       password
-    ).then((result) => this.setUserData(result.user));
+    ).then((result) => this.setUserData(result.user, displayName))
   }
 
   //Al cerrar sesión, borramos también el user del sessionStorage
@@ -57,14 +58,17 @@ export class AuthService {
     auth.signOut().then(() => sessionStorage.removeItem('user'));
   }
 
-  setUserData(user) {
+  setUserData(user, displayName) {
+
+    updateProfile(user, {displayName: displayName})
+
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
     );
     const userData: User = {
       uid: user.uid,
       email: user.email,
-      displayName: user.displayName,
+      displayName: displayName,
     };
     return userRef.set(userData, {
       merge: true,
