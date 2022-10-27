@@ -108,8 +108,9 @@ ion-modal{
   }
   .own:hover {
     .del {
+      color: white;      
       visibility: visible;
-      // pointer-events: none;
+      pointer-events: none;
     }
     .del2 {
       transition: all 0.3s ease;
@@ -130,6 +131,11 @@ ion-modal{
 
 ion-icon {
   color: #3689ff
+}
+
+.modalFooter{
+  position: fixed;
+  height: 100px;
 }
 
 .modalToolbar{
