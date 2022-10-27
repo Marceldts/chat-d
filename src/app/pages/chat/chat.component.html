@@ -62,13 +62,13 @@
             <ion-select-option value="Grande">Grande</ion-select-option>
           </ion-select>
         </ion-item>
-        <ion-item>
+        <!-- <ion-item>
           <ion-text color="primary" class="modalLabel">Cambiar nombre de usuario</ion-text>
           <ion-input #changeUser id="changeUser" type="text" placeholder="{{username}}" class="modalInput"></ion-input>
-        </ion-item>
+        </ion-item> -->
         <ion-item>
           <ion-text color="primary" class="modalLabel">Cambiar contraseña</ion-text>
-          <ion-input #changePass id="changePass" type="password" class="modalInput" placeholder="******"></ion-input>
+          <ion-input #changePass id="changePass"type="password" class="modalInput" placeholder="******"></ion-input>
         </ion-item>
       </ion-list>
 
@@ -128,6 +128,12 @@
       >
         <div class="own">
           <ion-row class="headMsg">
+            <!-- <ion-text *ngIf="message.user != user"><b>{{ message.username }}:</b><br
+            /></ion-text>
+            <ion-text *ngIf="message.username != username && message.user == user"><b>{{ message.username }} (ahora conocido como {{username}}):</b><br
+            /></ion-text>
+            <ion-text *ngIf="message.username != username && message.user == user"><b>{{ message.username }} (ahora conocido como {{username}}):</b><br
+              /></ion-text> -->
             <ion-text><b>{{ message.username }}:</b><br
             /></ion-text>
             <span

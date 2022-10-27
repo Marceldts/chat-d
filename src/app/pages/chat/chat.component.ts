@@ -25,7 +25,7 @@ export class ChatComponent implements OnInit {
 
   messages: Array<Message> = [];
   inputMessage: any;
-  changeUser: any;
+  // changeUser: any;
   changePass: any;
   ubi: string;
   geo: string;
@@ -261,17 +261,40 @@ export class ChatComponent implements OnInit {
   onCloseModal() {
     this.modal.dismiss();
   }
-  
-  onSaveConfig(){
-    this.changeUser = document.getElementById('changeUser')
+
+  onChangePass(){
     this.changePass = document.getElementById('changePass')
 
-    var newUser = (<any>this.changeUser).value
+    var newPass = (<any>this.changePass).value
+    this.authService.changePassword(newPass)
+    alert('Contraseña actualizada!')
+  }
+  
+  onSaveConfig(){
+    // this.changeUser = document.getElementById('changeUser')
+    this.changePass = document.getElementById('changePass')
+
+    // var newUser = (<any>this.changeUser).value
     var newPass = (<any>this.changePass).value
 
-
-    if(newUser) console.log(newUser)
-    if(newPass) console.log(newPass)
+    if(newPass) {
+      if(newPass.length < 6) {
+        alert('La nueva contraseña no es válida: no llega a tener 6 carácteres')
+        return null
+      }
+      if(newPass != this.password) {
+        this.authService.changePassword(newPass)
+      }
+    }
+    // if(newUser) {
+    //   if(newUser.length < 2) {
+    //     alert('La nueva contraseña no es válida: no llega a tener 6 carácteres')
+    //     return null
+    //   }
+    //   if(newUser != this.username) {
+    //     this.authService.changeUsername(newUser, this.password)
+    //   }
+    // }
   }
 
   modalData(username){

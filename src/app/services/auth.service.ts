@@ -3,6 +3,8 @@ import {
   createUserWithEmailAndPassword,
   getAuth,
   signInWithEmailAndPassword,
+  updateCurrentUser,
+  updatePassword,
   updateProfile,
 } from 'firebase/auth';
 import { FirebaseServiceService } from './firebase-service.service';
@@ -75,6 +77,40 @@ export class AuthService {
       merge: true,
     });
   }
+
+  changePassword(newPass){    
+    FirebaseServiceService.getFirebaseConfig();
+    const auth = getAuth();
+    updatePassword(auth.currentUser, newPass)
+    sessionStorage.setItem('user',
+    JSON.stringify(
+      {
+      uid: auth.currentUser.uid,
+      token: auth.currentUser['accessToken'],
+      email: auth.currentUser.email,
+      username: auth.currentUser.displayName,
+      password: newPass,
+    })
+    )
+  }
+
+  changeUsername(newUser, password){    
+    FirebaseServiceService.getFirebaseConfig();
+    const auth = getAuth();
+    this.setUserData(auth.currentUser, newUser)
+    sessionStorage.setItem('user',
+    JSON.stringify(
+      {
+      uid: auth.currentUser.uid,
+      token: auth.currentUser['accessToken'],
+      email: auth.currentUser.email,
+      username: newUser,
+      password: password
+    })
+    )
+    alert('Nombre de usuario actualizado!')
+  }
+
 }
 export interface User {
   uid: string;
