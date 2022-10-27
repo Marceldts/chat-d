@@ -32,6 +32,7 @@ export class AuthService {
             uid: user.uid,
             token: user['accessToken'],
             email: user.email,
+            username: user.displayName,
             password: password,
           })
         );

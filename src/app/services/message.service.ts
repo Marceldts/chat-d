@@ -19,14 +19,21 @@ export class MessageService {
     );
   }
 
-  addMessage(user: string, date: string, text: string, geo: string, type: string) {
-    this.messageDB.push({
-      user,
-      date,
-      text,
-      geo,
-      type
-    });
+  addMessage(user: string, username: string, date: string, text: string, geo: string, type: string) {
+    console.log('Llega al service')
+    try {
+      this.messageDB.push({
+        user,
+        username,
+        date,
+        text,
+        geo,
+        type
+      });
+      
+    } catch (error) {
+      alert(error)
+    }
   }
 
   deleteMessage(key){
@@ -56,6 +63,7 @@ export class MessageService {
 export interface Message {
   $key?: string;
   user: string;
+  username: string;
   date: string;
   text: string;
   geo?: string;

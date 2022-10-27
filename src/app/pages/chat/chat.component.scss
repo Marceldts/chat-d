@@ -23,18 +23,18 @@ ion-input {
   background-color: rgba(0, 0, 0, 0.2);
   // margin: 10px;
   margin: 10px 0 10px 10px;
-  border-radius: 5px;
+  border-radius: 3px;
   color: white;
 }
 ion-button {
   // --background: #3689ff;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 ion-button.enviar {
   // --background: #3689ff;
   // margin: 10px;
   // margin-left: auto;
-  border-radius: 5px;
+  border-radius: 3px;
   height: auto;
   transition: 0.3s;
 }
@@ -42,18 +42,18 @@ ion-button.camera {
   // --background: #3689ff;
   // margin: 10px;
   // margin-left: auto;
-  border-radius: 5px;
+  border-radius: 3px;
   height: auto;
   transition: 0.3s;
 }
 
 img {
   margin-top: 0.25rem;
-  border-radius: 5px;
+  border-radius: 3px;
 }
 
 ion-modal{
-  --border-radius: 1%
+  --border-radius: 3px
 }
 
 .darkIcon{
@@ -71,7 +71,7 @@ ion-modal{
   width: fit-content;
   max-width: 85%;
   transition: 0.3s;
-  border-radius: 0.5rem;
+  border-radius: 3px;
   ion-item {
     --background: #dadae0;
     ion-label {
@@ -104,7 +104,7 @@ ion-modal{
     ion-item {
       --background: #3689ff;
     }
-    border-radius: 0.5rem;
+    border-radius: 3px;
   }
   .own:hover {
     .del {
@@ -144,4 +144,19 @@ ion-icon {
   flex-wrap: nowrap;
   align-items: center;
 }
+
+.modalContent{
+  display: flex;
+}
+
+ion-item{
+  ion-input{
+    --padding-start: 10px
+  }
+}
+
+.modalLabel{
+    width: 37%
+}
+
 @import url("https://fonts.googleapis.com/css2?family=Open+Sans:ital,wght@0,500;1,800&display=swap");

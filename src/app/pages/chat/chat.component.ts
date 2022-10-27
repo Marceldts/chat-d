@@ -25,13 +25,17 @@ export class ChatComponent implements OnInit {
 
   messages: Array<Message> = [];
   inputMessage: any;
+  changeUser: any;
+  changePass: any;
   ubi: string;
   geo: string;
   type: string;
   end = false;
   slice = 0;
   ind;
+
   user = JSON.parse(sessionStorage.getItem('user')!).email;
+  username = JSON.parse(sessionStorage.getItem('user')!).username;
   password = JSON.parse(sessionStorage.getItem('user')!).password;
   darkTheme = localStorage.getItem('darkTheme');
   fontSize = localStorage.getItem('fontSize');
@@ -146,9 +150,10 @@ export class ChatComponent implements OnInit {
   //Una vez tengamos el texto, guardamos la fecha y el tipo y añadimos el mensaje al servicio de mensajes
   //Al acabar, borramos el texto del input y scrolleamos al final
   onSendMessage() {
-    this.inputMessage = this.el.nativeElement.getElementsByTagName('input')[0];
+    this.inputMessage = document.querySelector('#inputMessage')
     const text = this.inputMessage.value;
     if (text.length < 1) {
+      console.log(text)
       return null;
     }
     const date = Date.now().toString();
@@ -156,6 +161,7 @@ export class ChatComponent implements OnInit {
     try {
       this.messageService.addMessage(
         this.user,
+        this.username,
         date,
         text,
         this.geo,
@@ -164,9 +170,11 @@ export class ChatComponent implements OnInit {
     } catch (error) {
       //Si quiero que la ubicación sea necesaria, puedo lanzar esta alerta en vez de añadir el msg
       //alert('Para poder enviar mensajes, por favor, permite la localización');
+      console.log('Llega al error geo')
       this.geo = 'No permission to access location';
       this.messageService.addMessage(
         this.user,
+        this.username,
         date,
         text,
         this.geo,
@@ -210,6 +218,7 @@ export class ChatComponent implements OnInit {
     try {
       this.messageService.addMessage(
         this.user,
+        this.username,
         date,
         image.dataUrl,
         this.geo,
@@ -219,6 +228,7 @@ export class ChatComponent implements OnInit {
       this.geo = 'No permission to access location';
       this.messageService.addMessage(
         this.user,
+        this.username,
         date,
         image.webPath,
         this.geo,
@@ -250,5 +260,21 @@ export class ChatComponent implements OnInit {
 
   onCloseModal() {
     this.modal.dismiss();
+  }
+  
+  onSaveConfig(){
+    this.changeUser = document.getElementById('changeUser')
+    this.changePass = document.getElementById('changePass')
+
+    var newUser = (<any>this.changeUser).value
+    var newPass = (<any>this.changePass).value
+
+
+    if(newUser) console.log(newUser)
+    if(newPass) console.log(newPass)
+  }
+
+  modalData(username){
+    console.log(username)
   }
 }
