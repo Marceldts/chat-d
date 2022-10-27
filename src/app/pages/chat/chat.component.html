@@ -37,7 +37,7 @@
   </ion-content>
 </ion-menu>
 
-<ion-modal trigger="open-modal">
+<ion-modal trigger="open-modal" class="modal">
   <ng-template>
     <ion-header [translucent]="true">
       <ion-toolbar color="light">
@@ -80,13 +80,12 @@
           <ion-buttons>
             <ion-button (click)="onSaveConfig()">Guardar los cambios</ion-button>
           </ion-buttons>
-          <ion-buttons slot="start">
-            <ion-button (click)="onCloseModal()">Cerrar</ion-button>
-          </ion-buttons>
-          <ion-buttons slot="end">
+          <ion-buttons>
             <ion-button (click)="onSetDefaultValues()"
-              >Cargar valores por defecto</ion-button
-            >
+              >Cargar valores por defecto</ion-button>
+          </ion-buttons>
+          <ion-buttons>
+            <ion-button (click)="onCloseModal()">Cerrar</ion-button>
           </ion-buttons>
         </div>
       </ion-toolbar>
