@@ -1,7 +1,9 @@
 import { Injectable } from '@angular/core';
 import {
   createUserWithEmailAndPassword,
+  EmailAuthProvider,
   getAuth,
+  reauthenticateWithCredential,
   signInWithEmailAndPassword,
   updateCurrentUser,
   updatePassword,
@@ -51,7 +53,7 @@ export class AuthService {
       auth,
       email,
       password
-    ).then((result) => this.setUserData(result.user, displayName))
+    ).then((result) => this.setUserData(result.user, displayName));
   }
 
   //Al cerrar sesión, borramos también el user del sessionStorage
@@ -62,8 +64,7 @@ export class AuthService {
   }
 
   setUserData(user, displayName) {
-
-    updateProfile(user, {displayName: displayName})
+    updateProfile(user, { displayName: displayName });
 
     const userRef: AngularFirestoreDocument<any> = this.afs.doc(
       `users/${user.uid}`
@@ -78,39 +79,65 @@ export class AuthService {
     });
   }
 
-  changePassword(newPass){    
+  changePassword(newPass) {
     FirebaseServiceService.getFirebaseConfig();
     const auth = getAuth();
-    updatePassword(auth.currentUser, newPass)
-    sessionStorage.setItem('user',
-    JSON.stringify(
-      {
-      uid: auth.currentUser.uid,
-      token: auth.currentUser['accessToken'],
-      email: auth.currentUser.email,
-      username: auth.currentUser.displayName,
-      password: newPass,
-    })
-    )
+    updatePassword(auth.currentUser, newPass);
+    sessionStorage.setItem(
+      'user',
+      JSON.stringify({
+        uid: auth.currentUser.uid,
+        token: auth.currentUser['accessToken'],
+        email: auth.currentUser.email,
+        username: auth.currentUser.displayName,
+        password: newPass,
+      })
+    );
   }
 
-  changeUsername(newUser, password){    
+  changeUsername(newUser, password) {
     FirebaseServiceService.getFirebaseConfig();
     const auth = getAuth();
-    this.setUserData(auth.currentUser, newUser)
-    sessionStorage.setItem('user',
-    JSON.stringify(
-      {
-      uid: auth.currentUser.uid,
-      token: auth.currentUser['accessToken'],
-      email: auth.currentUser.email,
-      username: newUser,
-      password: password
-    })
-    )
-    alert('Nombre de usuario actualizado!')
+    this.setUserData(auth.currentUser, newUser);
+    sessionStorage.setItem(
+      'user',
+      JSON.stringify({
+        uid: auth.currentUser.uid,
+        token: auth.currentUser['accessToken'],
+        email: auth.currentUser.email,
+        username: newUser,
+        password: password,
+      })
+    );
+    alert('Nombre de usuario actualizado!');
   }
 
+  async reauth(user, password) {
+    FirebaseServiceService.getFirebaseConfig();
+    const auth = getAuth();
+    const credential = EmailAuthProvider.credential(user, password);
+    let valid = false;
+
+    await reauthenticateWithCredential(auth.currentUser, credential).then(
+      () => {
+        this.deleteAccount();
+        alert('Cuenta borrada satisfactoriamente');
+        valid = true;
+      },
+      () => {
+        alert('Los datos introducidos no son correctos');
+        valid = false;
+      }
+    );
+    return valid;
+  }
+
+  async deleteAccount() {
+    FirebaseServiceService.getFirebaseConfig();
+    const auth = getAuth();
+
+    await auth.currentUser.delete();
+  }
 }
 export interface User {
   uid: string;

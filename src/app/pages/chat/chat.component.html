@@ -70,6 +70,10 @@
           <ion-text color="primary" class="modalLabel">Cambiar contraseña</ion-text>
           <ion-input #changePass id="changePass"type="password" class="modalInput" placeholder="******"></ion-input>
         </ion-item>
+        <ion-item>
+          <ion-text color="primary">Borrar cuenta</ion-text>
+          <ion-button (click)="onDeleteAccount()" color="light" slot="end">Borrar</ion-button>
+        </ion-item>
       </ion-list>
 
     </ion-content>
@@ -94,6 +98,7 @@
 </ion-modal>
 
 <div class="ion-page" id="main-content"></div>
+
 <ion-header [translucent]="true">
   <ion-toolbar color="light">
     <ion-row>

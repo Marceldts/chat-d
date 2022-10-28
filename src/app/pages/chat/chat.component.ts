@@ -1,6 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import {
+  AlertController,
   IonContent,
   IonInfiniteScroll,
   IonModal,
@@ -44,7 +45,8 @@ export class ChatComponent implements OnInit {
     private readonly authService: AuthService,
     private readonly router: Router,
     private el: ElementRef,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private alertController: AlertController
   ) {}
 
   //Al entrar en el componente, nos suscribimos al servicio de mensajes para poder mostrarlos y, dependiendo
@@ -150,10 +152,10 @@ export class ChatComponent implements OnInit {
   //Una vez tengamos el texto, guardamos la fecha y el tipo y añadimos el mensaje al servicio de mensajes
   //Al acabar, borramos el texto del input y scrolleamos al final
   onSendMessage() {
-    this.inputMessage = document.querySelector('#inputMessage')
+    this.inputMessage = document.querySelector('#inputMessage');
     const text = this.inputMessage.value;
     if (text.length < 1) {
-      console.log(text)
+      console.log(text);
       return null;
     }
     const date = Date.now().toString();
@@ -170,7 +172,6 @@ export class ChatComponent implements OnInit {
     } catch (error) {
       //Si quiero que la ubicación sea necesaria, puedo lanzar esta alerta en vez de añadir el msg
       //alert('Para poder enviar mensajes, por favor, permite la localización');
-      console.log('Llega al error geo')
       this.geo = 'No permission to access location';
       this.messageService.addMessage(
         this.user,
@@ -262,28 +263,32 @@ export class ChatComponent implements OnInit {
     this.modal.dismiss();
   }
 
-  onChangePass(){
-    this.changePass = document.getElementById('changePass')
+  onChangePass() {
+    this.changePass = document.getElementById('changePass');
 
-    var newPass = (<any>this.changePass).value
-    this.authService.changePassword(newPass)
-    alert('Contraseña actualizada!')
+    var newPass = (<any>this.changePass).value;
+    this.authService.changePassword(newPass);
+    alert('Contraseña actualizada!');
   }
-  
-  onSaveConfig(){
+
+  onSaveConfig() {
     // this.changeUser = document.getElementById('changeUser')
-    this.changePass = document.getElementById('changePass')
+    this.changePass = document.getElementById('changePass');
 
     // var newUser = (<any>this.changeUser).value
-    var newPass = (<any>this.changePass).value
+    var newPass = (<any>this.changePass).value;
 
-    if(newPass) {
-      if(newPass.length < 6) {
-        alert('La nueva contraseña no es válida: no llega a tener 6 carácteres')
-        return null
+    if (newPass) {
+      if (newPass.length < 6) {
+        alert(
+          'La nueva contraseña no es válida: no llega a tener 6 carácteres'
+        );
+        return null;
       }
-      if(newPass != this.password) {
-        this.authService.changePassword(newPass)
+      if (newPass != this.password) {
+        this.authService.changePassword(newPass);
+      } else {
+        alert('La nueva contraseña no puede coincidir con la anterior')
       }
     }
     // if(newUser) {
@@ -297,7 +302,53 @@ export class ChatComponent implements OnInit {
     // }
   }
 
-  modalData(username){
-    console.log(username)
+  onDeleteAccount() {
+    if (
+      confirm(
+        '¿Estás seguro de que quieres borrar tu cuenta?\n Si lo haces, no podrás volver a acceder con tus credenciales, tendrás que registrarte de nuevo'
+      )
+    ) {
+      this.presentAlert();
+    }
+  }
+
+  async presentAlert() {
+    const alert = await this.alertController.create({
+      header: 'Por favor, vuelve a introducir tus credenciales',
+      buttons: [
+        {
+          text: 'Cancel',
+          handler: () => {
+            alert.dismiss();
+          },
+        },
+        {
+          text: 'OK',
+          handler: async (alertData) => {
+            const res = await this.authService.reauth(alertData[0], alertData[1])
+            if(res){
+              alert.dismiss()
+              this.onCloseModal()
+              this.authService.logoff()
+              this.router.navigate([''])
+            }
+          },
+        },
+      ],
+      inputs: [
+        {
+          placeholder: 'Correo electrónico',
+        },
+        {
+          placeholder: 'Contraseña',
+          type: 'password',
+          attributes: {
+            minlength: 6,
+          },
+        },
+      ],
+    });
+
+    await alert.present();
   }
 }
