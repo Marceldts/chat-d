@@ -6,6 +6,7 @@ import {
   IonInfiniteScroll,
   IonModal,
   IonToggle,
+  ScrollDetail,
 } from '@ionic/angular';
 import { AuthService } from 'src/app/services/auth.service';
 import { Message, MessageService } from 'src/app/services/message.service';
@@ -127,6 +128,19 @@ export class ChatComponent implements OnInit {
     }, time);
   }
 
+  handleScroll(ev: CustomEvent<ScrollDetail>) {
+    console.log(this.ind);
+    if (ev.detail.scrollTop == 0) {
+      if (confirm('¿Quieres cargar mensajes anteriores?')) {
+        if (this.messages.length - this.ind < 0) {
+          alert('No hay mensajes anteriores');
+          return null;
+        }
+        this.ind = this.ind - 12;
+      }
+    }
+  }
+
   //Dejo el método aunque ya no haga nada por si decido volver a cargar los mensajes desde el principio e ir paginándolos
   loadData(event) {
     setTimeout(() => {
@@ -151,7 +165,7 @@ export class ChatComponent implements OnInit {
       this.geo = 'No permission to access location';
     }
   }
-  
+
   //Para enviar un mensaje, tenemos que guardar el texto del input en una variable
   //Una vez tengamos el texto, guardamos la fecha y el tipo y añadimos el mensaje al servicio de mensajes
   //Al acabar, borramos el texto del input y scrolleamos al final
@@ -164,14 +178,15 @@ export class ChatComponent implements OnInit {
     }
     const date = Date.now().toString();
     this.type = 'txt';
-      await this.messageService.addMessage(
-        this.user,
-        this.username,
-        date,
-        text,
-        this.geo,
-        this.type
-      );
+    this.ind--;
+    await this.messageService.addMessage(
+      this.user,
+      this.username,
+      date,
+      text,
+      this.geo,
+      this.type
+    );
 
     this.inputMessage.value = '';
     this.scrollToBottomSetTimeOut(10);
@@ -182,6 +197,7 @@ export class ChatComponent implements OnInit {
     if (msg.user === this.user) {
       if (confirm('¿Seguro que quieres borrar el mensaje?')) {
         this.messageService.deleteMessage(msg.$key);
+        this.ind++
         // msg.text = 'Este mensaje ha sido eliminado'
       }
     }
@@ -207,6 +223,7 @@ export class ChatComponent implements OnInit {
     const date = Date.now().toString();
     this.type = 'img';
     try {
+      this.ind--;
       this.messageService.addMessage(
         this.user,
         this.username,
@@ -216,7 +233,7 @@ export class ChatComponent implements OnInit {
         this.type
       );
     } catch (error) {
-      alert(error)
+      alert(error);
     }
   }
 
@@ -270,7 +287,7 @@ export class ChatComponent implements OnInit {
       if (newPass != this.password) {
         this.authService.changePassword(newPass);
       } else {
-        alert('La nueva contraseña no puede coincidir con la anterior')
+        alert('La nueva contraseña no puede coincidir con la anterior');
       }
     }
     // if(newUser) {
@@ -307,12 +324,15 @@ export class ChatComponent implements OnInit {
         {
           text: 'OK',
           handler: async (alertData) => {
-            const res = await this.authService.reauth(alertData[0], alertData[1])
-            if(res){
-              alert.dismiss()
-              this.onCloseModal()
-              this.authService.logoff()
-              this.router.navigate([''])
+            const res = await this.authService.reauth(
+              alertData[0],
+              alertData[1]
+            );
+            if (res) {
+              alert.dismiss();
+              this.onCloseModal();
+              this.authService.logoff();
+              this.router.navigate(['']);
             }
           },
         },
