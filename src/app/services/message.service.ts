@@ -20,7 +20,6 @@ export class MessageService {
   }
 
   addMessage(user: string, username: string, date: string, text: string, geo: string, type: string) {
-    console.log('Llega al service')
     try {
       this.messageDB.push({
         user,

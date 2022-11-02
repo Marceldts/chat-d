@@ -138,20 +138,24 @@ export class ChatComponent implements OnInit {
     }, 100);
   }
 
-  onGeoReady() {
-    Geolocation.getCurrentPosition().then((g) => {
-      this.geo =
-        '' +
-        g.coords.latitude.toFixed(2).toString() +
-        ', ' +
-        g.coords.longitude.toFixed(2).toString();
-    });
+  async onGeoReady() {
+    try {
+      await Geolocation.getCurrentPosition().then((g) => {
+        this.geo =
+          '' +
+          g.coords.latitude.toFixed(2).toString() +
+          ', ' +
+          g.coords.longitude.toFixed(2).toString();
+      });
+    } catch (error) {
+      this.geo = 'No permission to access location';
+    }
   }
-
+  
   //Para enviar un mensaje, tenemos que guardar el texto del input en una variable
   //Una vez tengamos el texto, guardamos la fecha y el tipo y añadimos el mensaje al servicio de mensajes
   //Al acabar, borramos el texto del input y scrolleamos al final
-  onSendMessage() {
+  async onSendMessage() {
     this.inputMessage = document.querySelector('#inputMessage');
     const text = this.inputMessage.value;
     if (text.length < 1) {
@@ -160,8 +164,7 @@ export class ChatComponent implements OnInit {
     }
     const date = Date.now().toString();
     this.type = 'txt';
-    try {
-      this.messageService.addMessage(
+      await this.messageService.addMessage(
         this.user,
         this.username,
         date,
@@ -169,19 +172,6 @@ export class ChatComponent implements OnInit {
         this.geo,
         this.type
       );
-    } catch (error) {
-      //Si quiero que la ubicación sea necesaria, puedo lanzar esta alerta en vez de añadir el msg
-      //alert('Para poder enviar mensajes, por favor, permite la localización');
-      this.geo = 'No permission to access location';
-      this.messageService.addMessage(
-        this.user,
-        this.username,
-        date,
-        text,
-        this.geo,
-        this.type
-      );
-    }
 
     this.inputMessage.value = '';
     this.scrollToBottomSetTimeOut(10);
@@ -226,15 +216,7 @@ export class ChatComponent implements OnInit {
         this.type
       );
     } catch (error) {
-      this.geo = 'No permission to access location';
-      this.messageService.addMessage(
-        this.user,
-        this.username,
-        date,
-        image.webPath,
-        this.geo,
-        this.type
-      );
+      alert(error)
     }
   }
 

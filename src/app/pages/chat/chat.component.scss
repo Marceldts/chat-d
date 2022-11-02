@@ -141,13 +141,7 @@ ion-icon {
   height: 100px;
 }
 
-.modalToolbar{
-  display: flex;
-  flex-direction: column;
-  flex-wrap: nowrap;
-  align-items: center;
-}
-
+//Si usamos esta clase, podemos ajustar las propiedades del modal
 // .modal{
 //   &::part(content){
 //     height: 50%; 
