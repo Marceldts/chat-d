@@ -30,6 +30,9 @@ npm-debug.log*
 /platforms
 /plugins
 /www
+
+www./*
+
 .firebase/hosting.d3d3.cache
 www./3rdpartylicenses.txt
 www./109.652087483f18b252.js
@@ -1579,3 +1582,8 @@ www./6445.5cc59a7bbe0d8eff.js
 www./6445.a3cf69ddf31f80da.js
 www./main.967ac83eaedfa317.js
 www./runtime.61835937663a9afc.js
+www./1069.fdb8c0debb9f9eff.js
+www./6445.50782c87ff3632e1.js
+www./7970.46e040f4f8d60a30.js
+www./main.6f70e5fcd7f791e6.js
+www./runtime.8221795aaa70fbd0.js

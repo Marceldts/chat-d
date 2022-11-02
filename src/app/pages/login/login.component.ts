@@ -2,6 +2,7 @@ import { Component, OnInit, ElementRef } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { AuthService } from 'src/app/services/auth.service';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -18,7 +19,8 @@ export class LoginComponent implements OnInit {
     private readonly fb: FormBuilder,
     private readonly authService: AuthService,
     private readonly router: Router,
-    private el: ElementRef
+    private el: ElementRef,
+    private loadingCtrl: LoadingController
   ) {}
 
   ngOnInit(): void {
@@ -44,11 +46,20 @@ export class LoginComponent implements OnInit {
   onLogin() {
     const { email, password } = this.loginForm.value;
     if (this.tries < 6 && this.loginForm.valid === true) {
+      this.showLoading().then(() => 
       this.authService
         .login(email, password)
         .then(() => this.router.navigate(['/chat']))
-        .catch((e) => this.loginError(e));
+        .catch((e) => this.loginError(e)))
     }
+  }
+
+  async showLoading(){
+    const loading = await this.loadingCtrl.create({
+      message: 'Intentando iniciar sesión...',
+      duration: 1000
+    })
+    loading.present()
   }
 
   //Cuando ocurre un error al intentar iniciar sesión (usuario no registrado/contraseña incorrecta),
