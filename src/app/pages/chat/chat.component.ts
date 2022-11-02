@@ -129,7 +129,6 @@ export class ChatComponent implements OnInit {
   }
 
   handleScroll(ev: CustomEvent<ScrollDetail>) {
-    console.log(this.ind);
     if (ev.detail.scrollTop == 0) {
       if (confirm('¿Quieres cargar mensajes anteriores?')) {
         if (this.messages.length - this.ind < 0) {
@@ -173,7 +172,6 @@ export class ChatComponent implements OnInit {
     this.inputMessage = document.querySelector('#inputMessage');
     const text = this.inputMessage.value;
     if (text.length < 1) {
-      console.log(text);
       return null;
     }
     const date = Date.now().toString();
