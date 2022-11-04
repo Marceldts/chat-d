@@ -53,7 +53,7 @@ export class ChatComponent implements OnInit {
   //Al entrar en el componente, nos suscribimos al servicio de mensajes para poder mostrarlos y, dependiendo
   //de la cantidad de mensajes que haya, se enseñarán todos o los 12 últimos
   ngOnInit() {
-    // this.subscribeMessages();
+    //this.subscribeMessages();
 
     this.themeToggle();
     this.setFontSize();
