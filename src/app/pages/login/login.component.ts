@@ -24,11 +24,11 @@ export class LoginComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.checkForm();
+    this.checkForm().then(() => this.checkMail());
   }
 
   //Añadimos los validadores al form (el último del mail significa que ha de tener algo antes y después del @ y ha de acabar en . y 2-4 carácteres)
-  checkForm() {
+  async checkForm() {
     this.loginForm = this.fb.group({
       email: [
         '',
@@ -42,24 +42,46 @@ export class LoginComponent implements OnInit {
     });
   }
 
+  //Cambiamos el tipo de check a any porque la propiedad checked no existe en el elemento, al ser una propiedad especifica de un 
+  //componente de ionic
+  checkMail() {
+    const email = document.querySelector('#email');
+    const check = document.querySelector('#rememberEmail');
+    if (localStorage.getItem('email')) {
+      email.setAttribute('value', localStorage.getItem('email'));
+      (<any>check).checked = true
+    }
+  }
+  
+  saveEmail() {
+    const check = document.querySelector('#rememberEmail');
+    if (check.ariaChecked == 'true') {
+      localStorage.setItem('email', this.loginForm.value.email);
+    } else {
+      localStorage.removeItem('email')
+    }
+  }
+
   //Para poder iniciar sesión, los campos del form han de ser válidos y no se ha tenido que superar el máximo de intentos
   onLogin() {
     const { email, password } = this.loginForm.value;
     if (this.tries < 6 && this.loginForm.valid === true) {
-      this.showLoading().then(() => 
-      this.authService
-        .login(email, password)
-        .then(() => this.router.navigate(['/chat']))
-        .catch((e) => this.loginError(e)))
+      this.showLoading().then(() =>
+        this.authService
+          .login(email, password)
+          .then(() => this.saveEmail())
+          .then(() => this.router.navigate(['/chat']))
+          .catch((e) => this.loginError(e))
+      );
     }
   }
 
-  async showLoading(){
+  async showLoading() {
     const loading = await this.loadingCtrl.create({
       message: 'Intentando iniciar sesión...',
-      duration: 1000
-    })
-    loading.present()
+      duration: 1000,
+    });
+    loading.present();
   }
 
   //Cuando ocurre un error al intentar iniciar sesión (usuario no registrado/contraseña incorrecta),

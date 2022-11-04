@@ -11,7 +11,9 @@
         required
         formControlName="email"
         inputmode="email"
-        (keyup.enter)="onLogin()"
+        id="email"
+        (keyup.enter)="checkMail()"
+        value="asdasdasd"
       ></ion-input>
     </ion-item>
     <ion-item>
@@ -23,6 +25,10 @@
         minlength="6"
         (keyup.enter)="onLogin()"
       ></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-checkbox slot="start" id="rememberEmail"></ion-checkbox>
+      <ion-label>Recordar email</ion-label>
     </ion-item>
     <div class="flex">
       <div class="bot">
