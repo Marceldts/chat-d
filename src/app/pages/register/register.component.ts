@@ -13,7 +13,7 @@ import { async } from '@firebase/util';
 export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   check = document.querySelector('#condition');
-  termsRead = false
+  termsRead = false;
 
   constructor(
     private readonly fb: FormBuilder,
@@ -24,22 +24,22 @@ export class RegisterComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.checkForm().then(() =>this.checkboxListener())
+    this.checkForm().then(() => this.checkboxListener());
   }
 
-  async checkboxListener(){
+  async checkboxListener() {
     const check = document.querySelector('#condition');
     // if(!this.termsRead) this.check.ariaDisabled
     check.addEventListener('ionChange', (ev) => {
       // if(this.termsRead) (<any>this.check).checked = true
-      console.log((<any>ev).detail.checked)
-      if(this.termsRead && (<any>ev).detail.checked){
-        (<any>check).checked = true
+      console.log((<any>ev).detail.checked);
+      if (this.termsRead && (<any>ev).detail.checked) {
+        (<any>check).checked = true;
       } else {
-        (<any>check).checked = false
+        (<any>check).checked = false;
       }
-      if(!(<any>ev).detail.checked && !this.termsRead){
-        this.presentAlert()
+      if (!(<any>ev).detail.checked && !this.termsRead) {
+        this.presentAlert();
       }
     });
   }
@@ -57,56 +57,55 @@ export class RegisterComponent implements OnInit {
       ],
       password: ['', Validators.required],
       username: ['', Validators.required],
-      termsAgreed: [false, Validators.requiredTrue]
+      termsAgreed: [false, Validators.requiredTrue],
     });
   }
 
   onRegister() {
     const { email, password, username } = this.registerForm.value;
-    this.showLoading().then(() => 
-    this.authService
-      .register(email, password, username)
-      .then(() => this.authService.login(email, password))
-      .then(() => this.router.navigate(['/chat']))
-      .catch((e) => alert(e)))
+    this.showLoading().then(() =>
+      this.authService
+        .register(email, password, username)
+        .then(() => this.authService.login(email, password))
+        .then(() => this.router.navigate(['/chat']))
+        .catch((e) => alert(e))
+    );
   }
 
-  async showLoading(){
+  async showLoading() {
     const loading = await this.loadingCtrl.create({
       message: 'Registrando...',
-      duration: 2000
-    })
-    loading.present()
+      duration: 2000,
+    });
+    loading.present();
   }
 
-  // onConditionModal(){
-  //   this.presentAlert()
-  // }
   async presentAlert() {
+    const check = document.querySelector('#condition');
     const alert = await this.alertController.create({
       header: 'Términos y Condiciones de uso',
       buttons: [
         {
           text: 'Cancelar',
           // role: 'cancel',
-          handler: async() => {
-            alert.dismiss()
-          }
+          handler: async () => {
+            alert.dismiss();
+          },
         },
         {
           text: 'Acepto',
           // role: 'confirm',
           handler: async () => {
-            this.termsRead = true
-            alert.dismiss()
+            this.termsRead = true;
+            alert.dismiss();
+            (<any>check).checked = true;
           },
         },
       ],
-      message: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tellus orci, bibendum quis nisl ut, tincidunt maximus lorem. Nam nec tincidunt ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur eget porttitor urna. Proin ornare egestas tempus. Quisque vel sodales sapien. Aenean eget lobortis nulla.'
+      message:
+        'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Etiam tellus orci, bibendum quis nisl ut, tincidunt maximus lorem. Nam nec tincidunt ipsum. Interdum et malesuada fames ac ante ipsum primis in faucibus. Curabitur eget porttitor urna. Proin ornare egestas tempus. Quisque vel sodales sapien. Aenean eget lobortis nulla.',
     });
 
     await alert.present();
   }
 }
-
-

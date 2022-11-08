@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Router } from '@angular/router';
+import { NavigationEnd, Router} from '@angular/router';
 import {
   AlertController,
   IonContent,
@@ -12,13 +12,14 @@ import { AuthService } from 'src/app/services/auth.service';
 import { Message, MessageService } from 'src/app/services/message.service';
 import { Geolocation } from '@capacitor/geolocation';
 import { Camera, CameraResultType } from '@capacitor/camera';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-chat',
   templateUrl: './chat.component.html',
   styleUrls: ['./chat.component.scss'],
 })
-export class ChatComponent implements OnInit {
+export class ChatComponent implements OnInit{
   @ViewChild(IonContent, { static: true }) content: IonContent;
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild('messagesContent', { static: true }) messagesContent: ElementRef;
@@ -36,16 +37,15 @@ export class ChatComponent implements OnInit {
   slice = 0;
   ind;
 
-  user = JSON.parse(sessionStorage.getItem('user')!).email;
-  username = JSON.parse(sessionStorage.getItem('user')!).username;
-  password = JSON.parse(sessionStorage.getItem('user')!).password;
+  user
+  username
+  password
   darkTheme = localStorage.getItem('darkTheme');
   fontSize = localStorage.getItem('fontSize');
 
   constructor(
     private readonly authService: AuthService,
     private readonly router: Router,
-    private el: ElementRef,
     private messageService: MessageService,
     private alertController: AlertController
   ) {}
@@ -53,13 +53,35 @@ export class ChatComponent implements OnInit {
   //Al entrar en el componente, nos suscribimos al servicio de mensajes para poder mostrarlos y, dependiendo
   //de la cantidad de mensajes que haya, se enseñarán todos o los 12 últimos
   ngOnInit() {
-    //this.subscribeMessages();
+    this.subscribeNavigationEnd()
 
     this.themeToggle();
     this.setFontSize();
-
+    
+    this.subscribeMessages();
     this.scrollToBottomSetTimeOut(1100);
     this.onGeoReady();
+  }
+
+  //Angular recicla los componentes, por lo que si intentamos entrar de nuevo cambiando de usuario nos cargará el anterior chat component
+  //(el que tiene los datos del usuario anterior) hasta que refresquemos la página, ya que ahí se vuelve a cargar el componente entero
+  //(por tanto, se vuelve a ejecutar ngInit y se vuelve a dar valor a las variables que tenemos declaradas)
+  //Para que funcione como nosotros queremos (es decir, que cada vez que iniciamos sesión se ponga correctamente el componente del chat),
+  //podemos hacerlo escuchando la primera vez que aparezca el evento 'NavigationEnd' en el chat. Este evento salta cuando el router acaba de
+  //navegar a otra ruta, por lo que la primera vez que aparezca al entrar en este chat será cuando entre (solo nos interesa la primera, para esto 
+  //nos da igual lo que pase cuando entre en otro componente). No hace falta desuscribirse gracias al método first, que solo recoge la
+  //primera aparición del evento
+  async subscribeNavigationEnd(){
+    this.router.events
+      .pipe(
+        first((ev) => ev instanceof NavigationEnd)
+      )
+      .subscribe((ev) => {
+         // handle navigation start event
+         this.user = JSON.parse(sessionStorage.getItem('user')).email;
+         this.username = JSON.parse(sessionStorage.getItem('user')).username;
+         this.password = JSON.parse(sessionStorage.getItem('user')).password;
+      });
   }
 
   themeToggle() {
