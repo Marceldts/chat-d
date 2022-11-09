@@ -14,6 +14,9 @@ export class LoginComponent implements OnInit {
   tries = 0;
   triesMax: Boolean;
   timeRem = this.el.nativeElement.getElementsByTagName('timeRem');
+  loading = this.loadingCtrl.create({
+    message: 'Intentando iniciar sesión...',
+  });
 
   constructor(
     private readonly fb: FormBuilder,
@@ -71,17 +74,14 @@ export class LoginComponent implements OnInit {
           .login(email, password)
           .then(() => this.saveEmail())
           .then(() => this.router.navigate(['/chat']))
+          .then(async () => (await this.loading).dismiss())
           .catch((e) => this.loginError(e))
       );
     }
   }
 
   async showLoading() {
-    const loading = await this.loadingCtrl.create({
-      message: 'Intentando iniciar sesión...',
-      duration: 1000,
-    });
-    loading.present();
+    (await this.loading).present();
   }
 
   //Cuando ocurre un error al intentar iniciar sesión (usuario no registrado/contraseña incorrecta),

@@ -14,6 +14,9 @@ export class RegisterComponent implements OnInit {
   registerForm: FormGroup;
   check = document.querySelector('#condition');
   termsRead = false;
+  loading = this.loadingCtrl.create({
+    message: 'Registrando la cuenta...',
+  });
 
   constructor(
     private readonly fb: FormBuilder,
@@ -32,7 +35,6 @@ export class RegisterComponent implements OnInit {
     // if(!this.termsRead) this.check.ariaDisabled
     check.addEventListener('ionChange', (ev) => {
       // if(this.termsRead) (<any>this.check).checked = true
-      console.log((<any>ev).detail.checked);
       if (this.termsRead && (<any>ev).detail.checked) {
         (<any>check).checked = true;
       } else {
@@ -68,16 +70,16 @@ export class RegisterComponent implements OnInit {
         .register(email, password, username)
         .then(() => this.authService.login(email, password))
         .then(() => this.router.navigate(['/chat']))
-        .catch((e) => alert(e))
+        .then(async () => (await this.loading).dismiss())
+        .catch(async (e) => {
+          (await this.loading).dismiss();
+          alert(e);
+        })
     );
   }
 
   async showLoading() {
-    const loading = await this.loadingCtrl.create({
-      message: 'Registrando...',
-      duration: 2000,
-    });
-    loading.present();
+    (await this.loading).present();
   }
 
   async presentAlert() {
