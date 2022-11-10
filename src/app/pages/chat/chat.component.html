@@ -124,7 +124,7 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content class="ion-content" onload="scrollOnInit()" 
+<ion-content #mainContent class="ion-content" onload="scrollOnInit()" 
 [scrollEvents]="true"
 (ionScroll)="handleScroll($any($event))">
   <ion-infinite-scroll threshold="100px" (ionInfinite)="loadData($event)">

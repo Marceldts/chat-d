@@ -20,7 +20,7 @@ import { first } from 'rxjs/operators';
   styleUrls: ['./chat.component.scss'],
 })
 export class ChatComponent implements OnInit{
-  @ViewChild(IonContent, { static: true }) content: IonContent;
+  @ViewChild('mainContent', { static: true }) content: IonContent;
   @ViewChild(IonInfiniteScroll) infiniteScroll: IonInfiniteScroll;
   @ViewChild('messagesContent', { static: true }) messagesContent: ElementRef;
   @ViewChild(IonModal) modal: IonModal;
@@ -59,7 +59,6 @@ export class ChatComponent implements OnInit{
     this.setFontSize();
     
     this.subscribeMessages();
-    this.scrollToBottomSetTimeOut(1100);
     this.onGeoReady();
   }
 
@@ -144,21 +143,18 @@ export class ChatComponent implements OnInit{
     }
   }
 
-  scrollToBottomSetTimeOut(time) {
-    setTimeout(() => {
-      this.content.scrollToBottom();
-    }, time);
-  }
-
+  //Cuando acabamos de hacer scroll, se emite un evento con las características de este
+  //Lo que hacemos en este método es que, si al acabar el scroll estamos en la parte de más arriba, cargamos mensajes anteriores
+  //Lo que está comentado sirve para que solo carguen mensajes anteriores si confirmamos con una alerta
   handleScroll(ev: CustomEvent<ScrollDetail>) {
     if (ev.detail.scrollTop == 0) {
-      if (confirm('¿Quieres cargar mensajes anteriores?')) {
+      // if (confirm('¿Quieres cargar mensajes anteriores?')) {
         if (this.messages.length - this.ind < 0) {
-          alert('No hay mensajes anteriores');
+          // alert('No hay mensajes anteriores');
           return null;
         }
         this.ind = this.ind - 12;
-      }
+      // }
     }
   }
 
@@ -209,7 +205,7 @@ export class ChatComponent implements OnInit{
     );
 
     this.inputMessage.value = '';
-    this.scrollToBottomSetTimeOut(10);
+    await this.content.scrollToBottom()
   }
 
   onDelete(msg) {
