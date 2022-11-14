@@ -71,11 +71,11 @@ export class ChatComponent implements OnInit{
   //nos da igual lo que pase cuando entre en otro componente). No hace falta desuscribirse gracias al método first, que solo recoge la
   //primera aparición del evento
   async subscribeNavigationEnd(){
-    this.router.events
+    await this.router.events
       .pipe(
         first((ev) => ev instanceof NavigationEnd)
       )
-      .subscribe((ev) => {
+      .subscribe(() => {
          // handle navigation start event
          this.user = JSON.parse(sessionStorage.getItem('user')).email;
          this.username = JSON.parse(sessionStorage.getItem('user')).username;
@@ -347,6 +347,7 @@ export class ChatComponent implements OnInit{
             if (res) {
               alert.dismiss();
               this.onCloseModal();
+              await this.authService.deleteAccount();
               this.authService.logoff();
               this.router.navigate(['']);
             }

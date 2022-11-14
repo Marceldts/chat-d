@@ -63,6 +63,27 @@ export class AuthService {
     auth.signOut().then(() => sessionStorage.removeItem('user'));
   }
 
+  deleteUserData() {
+    FirebaseServiceService.getFirebaseConfig();
+    const auth = getAuth();
+    const user = auth.currentUser;
+
+    try {
+      const userRef: AngularFirestoreDocument<any> = this.afs.doc(
+        `users/${user.uid}`
+      );
+      userRef
+        .get()
+        .toPromise()
+        .then(() => {
+          let deleteDoc = this.afs.collection('users').doc(user.uid);
+          deleteDoc.delete();
+        });
+    } catch (error) {
+      console.log('No hay coincidencias en la base de datos');
+    }
+  }
+
   setUserData(user, displayName) {
     updateProfile(user, { displayName: displayName });
 
@@ -135,7 +156,7 @@ export class AuthService {
   async deleteAccount() {
     FirebaseServiceService.getFirebaseConfig();
     const auth = getAuth();
-
+    await this.deleteUserData();
     await auth.currentUser.delete();
   }
 }
